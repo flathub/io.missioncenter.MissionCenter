@@ -41,7 +41,9 @@
   "modules": [
     {
       "name": "rust-toolchain-x86_64",
-      "only-arches": [ "x86_64" ],
+      "only-arches": [
+        "x86_64"
+      ],
       "buildsystem": "simple",
       "build-commands": [
         "mkdir /app/rust-toolchain",
@@ -54,11 +56,15 @@
           "sha256": "fcc101cd0af292d94e090b79517078c704201adff77817af0f654ca32f086f5b"
         }
       ],
-      "cleanup": [ "*" ]
+      "cleanup": [
+        "*"
+      ]
     },
     {
       "name": "rust-toolchain-aarch64",
-      "only-arches": [ "aarch64" ],
+      "only-arches": [
+        "aarch64"
+      ],
       "buildsystem": "simple",
       "build-commands": [
         "mkdir /app/rust-toolchain",
@@ -71,7 +77,9 @@
           "sha256": "fcc101cd0af292d94e090b79517078c704201adff77817af0f654ca32f086f5b"
         }
       ],
-      "cleanup": [ "*" ]
+      "cleanup": [
+        "*"
+      ]
     },
     {
       "name": "missioncenter",
@@ -92,8 +100,8 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "tag": "v0.2.1",
-          "commit": "721d69a7a25f0903512d41e351d10db9db179928"
+          "tag": "v0.2.2",
+          "commit": "7cb5f0d6a3fe8145314467a4f5a0f22764efe8cd"
         },
         {
           "type": "archive",
@@ -137,7 +145,9 @@
               "sha256": "7a35eae33d5372a7c0da1188de798726f68825513b7ae3ebe97aaaa52114f039"
             }
           ],
-          "cleanup": [ "*" ]
+          "cleanup": [
+            "*"
+          ]
         },
         {
           "name": "dmidecode",
@@ -157,7 +167,9 @@
         {
           "name": "proxy",
           "buildsystem": "simple",
-          "only-arches": [ "x86_64" ],
+          "only-arches": [
+            "x86_64"
+          ],
           "build-options": {
             "append-path": "/app/rust-toolchain/bin",
             "env": {
@@ -177,8 +189,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "tag": "v0.2.1",
-              "commit": "721d69a7a25f0903512d41e351d10db9db179928"
+              "tag": "v0.2.2",
+              "commit": "7cb5f0d6a3fe8145314467a4f5a0f22764efe8cd"
             },
             "cargo-sources-proxy.json"
           ]
@@ -186,7 +198,9 @@
         {
           "name": "proxy",
           "buildsystem": "simple",
-          "only-arches": [ "aarch64" ],
+          "only-arches": [
+            "aarch64"
+          ],
           "build-options": {
             "append-path": "/app/rust-toolchain/bin",
             "env": {
@@ -206,8 +220,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "tag": "v0.2.1",
-              "commit": "721d69a7a25f0903512d41e351d10db9db179928"
+              "tag": "v0.2.2",
+              "commit": "7cb5f0d6a3fe8145314467a4f5a0f22764efe8cd"
             },
             "cargo-sources-proxy.json"
           ]
