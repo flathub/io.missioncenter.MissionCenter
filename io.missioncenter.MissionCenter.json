@@ -3,6 +3,10 @@
   "runtime": "org.gnome.Platform",
   "runtime-version": "44",
   "sdk": "org.gnome.Sdk",
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Extension.rust-stable",
+    "org.freedesktop.Sdk.Extension.llvm16"
+  ],
   "command": "missioncenter",
   "build-options": {
     "no-debuginfo": true
@@ -90,18 +94,20 @@
         "-Dcargo_env='CARGO_HOME=/run/build/missioncenter/cargo'"
       ],
       "build-options": {
-        "append-path": "/app/rust-toolchain/bin",
+        "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm16/bin",
         "env": {
-          "RUST_BACKTRACE": "full",
-          "RUSTUP_HOME": "/app/rust-toolchain"
+            "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER": "clang",
+            "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS": "-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold",
+            "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER": "clang",
+            "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS": "-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold"
         }
       },
       "sources": [
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "tag": "v0.2.2",
-          "commit": "7cb5f0d6a3fe8145314467a4f5a0f22764efe8cd"
+          "tag": "v0.2.3",
+          "commit": "2d21e283749ee539b50cb68a4104cdb4b8965597"
         },
         {
           "type": "archive",
@@ -189,8 +195,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "tag": "v0.2.2",
-              "commit": "7cb5f0d6a3fe8145314467a4f5a0f22764efe8cd"
+              "tag": "v0.2.3",
+              "commit": "2d21e283749ee539b50cb68a4104cdb4b8965597"
             },
             "cargo-sources-proxy.json"
           ]
@@ -220,8 +226,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "tag": "v0.2.2",
-              "commit": "7cb5f0d6a3fe8145314467a4f5a0f22764efe8cd"
+              "tag": "v0.2.3",
+              "commit": "2d21e283749ee539b50cb68a4104cdb4b8965597"
             },
             "cargo-sources-proxy.json"
           ]
