@@ -78,7 +78,7 @@
         {
           "type": "archive",
           "url": "https://gitlab.com/mission-center-devs/build-tools/-/raw/main/rust-musl-1.70.0-aarch64.tar.zst",
-          "sha256": "fcc101cd0af292d94e090b79517078c704201adff77817af0f654ca32f086f5b"
+          "sha256": "337cda04d2ee6e8b253e529e6c0893e3a4ccf87d6d0c7dcb5077a58cf88f7a4a"
         }
       ],
       "cleanup": [
