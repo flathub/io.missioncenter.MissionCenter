@@ -107,7 +107,7 @@
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
           "tag": "v0.2.4",
-          "commit": "ab742a7a0c909e6da07de15513ee59c7f1e148a3"
+          "commit": "82161dc137b67ad7bbb73696febc8dfc751deb14"
         },
         {
           "type": "archive",
@@ -196,7 +196,7 @@
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
               "tag": "v0.2.4",
-              "commit": "ab742a7a0c909e6da07de15513ee59c7f1e148a3"
+              "commit": "82161dc137b67ad7bbb73696febc8dfc751deb14"
             },
             "cargo-sources-proxy.json"
           ]
@@ -227,7 +227,7 @@
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
               "tag": "v0.2.4",
-              "commit": "ab742a7a0c909e6da07de15513ee59c7f1e148a3"
+              "commit": "82161dc137b67ad7bbb73696febc8dfc751deb14"
             },
             "cargo-sources-proxy.json"
           ]
