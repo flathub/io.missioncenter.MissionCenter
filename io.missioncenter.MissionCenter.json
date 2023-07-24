@@ -78,7 +78,7 @@
         {
           "type": "archive",
           "url": "https://gitlab.com/mission-center-devs/build-tools/-/raw/main/rust-musl-1.70.0-aarch64.tar.zst",
-          "sha256": "fcc101cd0af292d94e090b79517078c704201adff77817af0f654ca32f086f5b"
+          "sha256": "337cda04d2ee6e8b253e529e6c0893e3a4ccf87d6d0c7dcb5077a58cf88f7a4a"
         }
       ],
       "cleanup": [
@@ -106,8 +106,8 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "tag": "v0.2.4",
-          "commit": "82161dc137b67ad7bbb73696febc8dfc751deb14"
+          "tag": "v0.2.5",
+          "commit": "8c18f889c166bfbc8f921c7d474cedc2c8e0bbbc"
         },
         {
           "type": "archive",
@@ -195,8 +195,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "tag": "v0.2.4",
-              "commit": "82161dc137b67ad7bbb73696febc8dfc751deb14"
+              "tag": "v0.2.5",
+              "commit": "8c18f889c166bfbc8f921c7d474cedc2c8e0bbbc"
             },
             "cargo-sources-proxy.json"
           ]
@@ -226,8 +226,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "tag": "v0.2.4",
-              "commit": "82161dc137b67ad7bbb73696febc8dfc751deb14"
+              "tag": "v0.2.5",
+              "commit": "8c18f889c166bfbc8f921c7d474cedc2c8e0bbbc"
             },
             "cargo-sources-proxy.json"
           ]
