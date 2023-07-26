@@ -3,10 +3,6 @@
   "runtime": "org.gnome.Platform",
   "runtime-version": "44",
   "sdk": "org.gnome.Sdk",
-  "sdk-extensions": [
-    "org.freedesktop.Sdk.Extension.rust-stable",
-    "org.freedesktop.Sdk.Extension.llvm16"
-  ],
   "command": "missioncenter",
   "build-options": {
     "no-debuginfo": true
@@ -44,20 +40,47 @@
   ],
   "modules": [
     {
-      "name": "rust-toolchain-x86_64",
-      "only-arches": [
-        "x86_64"
-      ],
+      "name": "build-tools",
       "buildsystem": "simple",
       "build-commands": [
-        "mkdir /app/rust-toolchain",
-        "mv * /app/rust-toolchain"
+        "echo 'Extract the cross-toolchain manually, it fails otherwise.'",
+        "mkdir cross-rootfs && cd cross-rootfs && tar xf ../ubuntu-14.04-*.tar.zst && rm ../ubuntu-14.04-*.tar.zst",
+        "mv * /app/"
       ],
       "sources": [
         {
           "type": "archive",
-          "url": "https://gitlab.com/mission-center-devs/build-tools/-/raw/main/rust-musl-1.70.0.tar.zst",
-          "sha256": "fcc101cd0af292d94e090b79517078c704201adff77817af0f654ca32f086f5b"
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-1.71.0-x86_64.tar.zst",
+          "dest": "rust-toolchain",
+          "sha256": "b5afacde977aa18a59385628dd8ec2bf6f18738b27e009df0c750efc4d5578ee",
+          "only-arches": [
+            "x86_64"
+          ]
+        },
+        {
+          "type": "file",
+          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-x86_64.tar.zst",
+          "sha256": "92b613a9a91ac5add802a2803af6db6d03b4cd073c7753896ea3d3020fad1a16",
+          "only-arches": [
+            "x86_64"
+          ]
+        },
+        {
+          "type": "archive",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-1.71.0-aarch64.tar.zst",
+          "dest": "rust-toolchain",
+          "sha256": "5bac97fe7f6c16529e952ced5f0e99b614fa246445a092473ad31ba59929b34b",
+          "only-arches": [
+            "aarch64"
+          ]
+        },
+        {
+          "type": "file",
+          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-aarch64.tar.zst",
+          "sha256": "37b2f6aaf45b7d76d18595f1505a776d9b47201a55b1d0c6e2f0cc795aaa8df5",
+          "only-arches": [
+            "aarch64"
+          ]
         }
       ],
       "cleanup": [
@@ -65,49 +88,150 @@
       ]
     },
     {
-      "name": "rust-toolchain-aarch64",
-      "only-arches": [
-        "aarch64"
-      ],
-      "buildsystem": "simple",
-      "build-commands": [
-        "mkdir /app/rust-toolchain",
-        "mv * /app/rust-toolchain"
+      "name": "musl-libc",
+      "buildsystem": "autotools",
+      "config-opts": [
+        "--prefix=/app/musl-libc"
       ],
       "sources": [
         {
           "type": "archive",
-          "url": "https://gitlab.com/mission-center-devs/build-tools/-/raw/main/rust-musl-1.70.0-aarch64.tar.zst",
-          "sha256": "337cda04d2ee6e8b253e529e6c0893e3a4ccf87d6d0c7dcb5077a58cf88f7a4a"
+          "url": "https://musl.libc.org/releases/musl-1.2.3.tar.gz",
+          "sha256": "7d5b0b6062521e4627e099e4c9dc8248d32a30285e959b7eecaa780cf8cfd4a4"
         }
       ],
       "cleanup": [
         "*"
+      ]
+    },
+    {
+      "name": "missioncenter-proxy",
+      "buildsystem": "simple",
+      "build-options": {
+        "append-path": "/app/rust-toolchain/bin",
+        "env": {
+          "RUST_BACKTRACE": "full",
+          "RUSTUP_HOME": "/app/rust-toolchain",
+          "CARGO_HOME": "/build-dir/src/proxy/cargo"
+        }
+      },
+      "build-commands": [
+        "tar xf libgcc*.xbps && mv usr/lib/libgcc_s.so.1 /app/musl-libc/lib && ln -s libgcc_s.so.1 /app/musl-libc/lib/libgcc_s.so && rm -rf usr libgcc*.xbps",
+        "cd src/proxy && cargo build --offline --release --target $(arch)-unknown-linux-musl",
+        "install -v -p -m 755 src/proxy/target/$(arch)-unknown-linux-musl/release/proxy /app/bin/missioncenter-proxy-musl",
+        "rm -rf src/proxy/target",
+        "",
+        "/app/bin/proot -b /app/rust-toolchain:/app/rust-toolchain -b $PWD:/build-dir -R /app/cross-rootfs /bin/sh -c 'cd /build-dir/src/proxy && /app/rust-toolchain/bin/cargo build --offline --release'",
+        "install -v -p -m 755 src/proxy/target/release/proxy /app/bin/missioncenter-proxy-glibc"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://gitlab.com/mission-center-devs/mission-center.git",
+          "commit": "85eca143e7024b3dff56521ccc4483548ad898af"
+        },
+        {
+          "type": "file",
+          "url": "https://alpha.de.repo.voidlinux.org/current/musl/libgcc-12.2.0_2.x86_64-musl.xbps",
+          "sha256": "33707d0360211cf097e5862529dad59dd16f33f76eb58d47f26ffd18239df990",
+          "only-arches": [
+            "x86_64"
+          ]
+        },
+        {
+          "type": "file",
+          "url": "https://alpha.de.repo.voidlinux.org/current/aarch64/libgcc-12.2.0_2.aarch64-musl.xbps",
+          "sha256": "7d1855eba3d1a947159da614a275c52115c95c9acbb57022eb2b0653c65c2fd9",
+          "only-arches": [
+            "aarch64"
+          ]
+        },
+        {
+          "type": "inline",
+          "contents": "[source.vendored-sources]\ndirectory = \"../../cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[target.x86_64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n\n[target.aarch64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n",
+          "dest": "src/proxy/.cargo",
+          "dest-filename": "config.toml"
+        },
+        "cargo-sources-proxy.json"
+      ],
+      "modules": [
+        {
+          "name": "proot",
+          "buildsystem": "simple",
+          "build-commands": [
+            "make -C src loader.elf loader-m32.elf build.h",
+            "make -C src proot",
+            "install -v -p -m 755 src/proot /app/bin/proot"
+          ],
+          "sources": [
+            {
+              "type": "git",
+              "url": "https://github.com/proot-me/proot.git",
+              "tag": "v5.4.0",
+              "commit": "bd5a5f63d72f8210d8cee76195eb9f0749e5bd70"
+            }
+          ],
+          "modules": [
+            {
+              "name": "libarchive",
+              "buildsystem": "autotools",
+              "config-opts": [
+                "--disable-bsdcat",
+                "--disable-bsdcpio",
+                "--disable-bsdtar"
+              ],
+              "sources": [
+                {
+                  "type": "archive",
+                  "url": "https://libarchive.org/downloads/libarchive-3.6.2.tar.xz",
+                  "sha256": "9e2c1b80d5fbe59b61308fdfab6c79b5021d7ff4ff2489fb12daf0a96a83551d"
+                }
+              ],
+              "cleanup": [
+                "*"
+              ]
+            },
+            {
+              "name": "libtalloc",
+              "buildsystem": "autotools",
+              "sources": [
+                {
+                  "type": "archive",
+                  "url": "https://www.samba.org/ftp/talloc/talloc-2.4.1.tar.gz",
+                  "sha256": "410a547f08557007be0e88194f218868358edc0ab98c98ba8c167930db3d33f9"
+                }
+              ],
+              "cleanup": [
+                "*"
+              ]
+            }
+          ],
+          "cleanup": [
+            "*"
+          ]
+        }
       ]
     },
     {
       "name": "missioncenter",
       "buildsystem": "meson",
+      "build-options": {
+        "append-path": "/app/rust-toolchain/bin",
+        "env": {
+          "RUST_BACKTRACE": "full",
+          "RUSTUP_HOME": "/app/rust-toolchain/"
+        }
+      },
       "config-opts": [
         "-Dbuildtype=release",
         "-Dflatpak=true",
         "-Dcargo_env='CARGO_HOME=/run/build/missioncenter/cargo'"
       ],
-      "build-options": {
-        "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm16/bin",
-        "env": {
-            "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER": "clang",
-            "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS": "-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold",
-            "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER": "clang",
-            "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS": "-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold"
-        }
-      },
       "sources": [
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "tag": "v0.2.5",
-          "commit": "8c18f889c166bfbc8f921c7d474cedc2c8e0bbbc"
+          "commit": "85eca143e7024b3dff56521ccc4483548ad898af"
         },
         {
           "type": "archive",
@@ -142,97 +266,6 @@
           ]
         },
         {
-          "name": "musl-libc",
-          "buildsystem": "autotools",
-          "sources": [
-            {
-              "type": "archive",
-              "url": "https://musl.libc.org/releases/musl-1.2.4.tar.gz",
-              "sha256": "7a35eae33d5372a7c0da1188de798726f68825513b7ae3ebe97aaaa52114f039"
-            }
-          ],
-          "cleanup": [
-            "*"
-          ]
-        },
-        {
-          "name": "dmidecode",
-          "buildsystem": "simple",
-          "build-commands": [
-            "make CC=musl-gcc CFLAGS=-static LDFLAGS=-static install-bin prefix=/app",
-            "install -v -p -m 755 /app/sbin/dmidecode /app/bin/dmidecode"
-          ],
-          "sources": [
-            {
-              "type": "archive",
-              "url": "https://git.savannah.nongnu.org/cgit/dmidecode.git/snapshot/dmidecode-3-5.tar.gz",
-              "sha256": "8b1465a1afa71f9ffb0206ba5ffc435c46c0281d089552578f600879728a1b23"
-            }
-          ]
-        },
-        {
-          "name": "proxy",
-          "buildsystem": "simple",
-          "only-arches": [
-            "x86_64"
-          ],
-          "build-options": {
-            "append-path": "/app/rust-toolchain/bin",
-            "env": {
-              "RUST_BACKTRACE": "full",
-              "RUSTUP_HOME": "/app/rust-toolchain",
-              "CARGO_HOME": "/run/build/proxy/cargo"
-            }
-          },
-          "build-commands": [
-            "cd src/proxy && env RUSTFLAGS='-C target-feature=+crt-static' cargo build --offline --release --target x86_64-unknown-linux-musl",
-            "install -v -p -m 755 src/proxy/target/x86_64-unknown-linux-musl/release/proxy /app/bin/missioncenter-proxy"
-          ],
-          "post-install": [
-            "rm -rf /app/include /app/lib/*.o /app/lib/*.a /app/lib/libc.so"
-          ],
-          "sources": [
-            {
-              "type": "git",
-              "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "tag": "v0.2.5",
-              "commit": "8c18f889c166bfbc8f921c7d474cedc2c8e0bbbc"
-            },
-            "cargo-sources-proxy.json"
-          ]
-        },
-        {
-          "name": "proxy",
-          "buildsystem": "simple",
-          "only-arches": [
-            "aarch64"
-          ],
-          "build-options": {
-            "append-path": "/app/rust-toolchain/bin",
-            "env": {
-              "RUST_BACKTRACE": "full",
-              "RUSTUP_HOME": "/app/rust-toolchain",
-              "CARGO_HOME": "/run/build/proxy/cargo"
-            }
-          },
-          "build-commands": [
-            "cd src/proxy && env RUSTFLAGS='-C target-feature=+crt-static' cargo build --offline --release --target aarch64-unknown-linux-musl",
-            "install -v -p -m 755 src/proxy/target/aarch64-unknown-linux-musl/release/proxy /app/bin/missioncenter-proxy"
-          ],
-          "post-install": [
-            "rm -rf /app/include /app/lib/*.o /app/lib/*.a /app/lib/libc.so"
-          ],
-          "sources": [
-            {
-              "type": "git",
-              "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "tag": "v0.2.5",
-              "commit": "8c18f889c166bfbc8f921c7d474cedc2c8e0bbbc"
-            },
-            "cargo-sources-proxy.json"
-          ]
-        },
-        {
           "name": "blueprint-compiler",
           "buildsystem": "meson",
           "sources": [
@@ -244,6 +277,30 @@
           ],
           "cleanup": [
             "*"
+          ]
+        },
+        {
+          "name": "static-binaries",
+          "buildsystem": "simple",
+          "build-commands": [
+            "/bin/true"
+          ],
+          "modules": [
+            {
+              "name": "dmidecode",
+              "buildsystem": "simple",
+              "build-commands": [
+                "make CC=/app/musl-libc/bin/musl-gcc CFLAGS=\"-static -I/app/musl-libc/include\" LDFLAGS=\"-static -L/app/musl-libc/lib\" install-bin prefix=/app",
+                "install -v -p -m 755 /app/sbin/dmidecode /app/bin/dmidecode"
+              ],
+              "sources": [
+                {
+                  "type": "archive",
+                  "url": "https://git.savannah.nongnu.org/cgit/dmidecode.git/snapshot/dmidecode-3-5.tar.gz",
+                  "sha256": "8b1465a1afa71f9ffb0206ba5ffc435c46c0281d089552578f600879728a1b23"
+                }
+              ]
+            }
           ]
         }
       ]
