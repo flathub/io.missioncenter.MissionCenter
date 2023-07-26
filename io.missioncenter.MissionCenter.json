@@ -93,11 +93,30 @@
       "config-opts": [
         "--prefix=/app/musl-libc"
       ],
+      "post-install": [
+        "tar xf libgcc*.xbps && mv usr/lib/libgcc_s.so.1 /app/musl-libc/lib/ && ln -s libgcc_s.so.1 /app/musl-libc/lib/libgcc_s.so && rm -rf usr libgcc*.xbps"
+      ],
       "sources": [
         {
           "type": "archive",
           "url": "https://musl.libc.org/releases/musl-1.2.3.tar.gz",
           "sha256": "7d5b0b6062521e4627e099e4c9dc8248d32a30285e959b7eecaa780cf8cfd4a4"
+        },
+        {
+          "type": "file",
+          "url": "https://alpha.de.repo.voidlinux.org/current/musl/libgcc-12.2.0_2.x86_64-musl.xbps",
+          "sha256": "33707d0360211cf097e5862529dad59dd16f33f76eb58d47f26ffd18239df990",
+          "only-arches": [
+            "x86_64"
+          ]
+        },
+        {
+          "type": "file",
+          "url": "https://alpha.de.repo.voidlinux.org/current/aarch64/libgcc-12.2.0_2.aarch64-musl.xbps",
+          "sha256": "7d1855eba3d1a947159da614a275c52115c95c9acbb57022eb2b0653c65c2fd9",
+          "only-arches": [
+            "aarch64"
+          ]
         }
       ],
       "cleanup": [
@@ -116,7 +135,6 @@
         }
       },
       "build-commands": [
-        "tar xf libgcc*.xbps && mv usr/lib/libgcc_s.so.1 /app/musl-libc/lib && ln -s libgcc_s.so.1 /app/musl-libc/lib/libgcc_s.so && rm -rf usr libgcc*.xbps",
         "cd src/proxy && cargo build --offline --release --target $(arch)-unknown-linux-musl",
         "install -v -p -m 755 src/proxy/target/$(arch)-unknown-linux-musl/release/proxy /app/bin/missioncenter-proxy-musl",
         "rm -rf src/proxy/target",
@@ -131,22 +149,6 @@
           "commit": "85eca143e7024b3dff56521ccc4483548ad898af"
         },
         {
-          "type": "file",
-          "url": "https://alpha.de.repo.voidlinux.org/current/musl/libgcc-12.2.0_2.x86_64-musl.xbps",
-          "sha256": "33707d0360211cf097e5862529dad59dd16f33f76eb58d47f26ffd18239df990",
-          "only-arches": [
-            "x86_64"
-          ]
-        },
-        {
-          "type": "file",
-          "url": "https://alpha.de.repo.voidlinux.org/current/aarch64/libgcc-12.2.0_2.aarch64-musl.xbps",
-          "sha256": "7d1855eba3d1a947159da614a275c52115c95c9acbb57022eb2b0653c65c2fd9",
-          "only-arches": [
-            "aarch64"
-          ]
-        },
-        {
           "type": "inline",
           "contents": "[source.vendored-sources]\ndirectory = \"../../cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[target.x86_64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n\n[target.aarch64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n",
           "dest": "src/proxy/.cargo",
@@ -159,7 +161,7 @@
           "name": "proot",
           "buildsystem": "simple",
           "build-commands": [
-            "make -C src loader.elf loader-m32.elf build.h",
+            "make -C src loader.elf build.h",
             "make -C src proot",
             "install -v -p -m 755 src/proot /app/bin/proot"
           ],
