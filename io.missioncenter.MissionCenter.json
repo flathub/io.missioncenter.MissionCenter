@@ -104,16 +104,16 @@
         },
         {
           "type": "file",
-          "url": "https://alpha.de.repo.voidlinux.org/current/musl/libgcc-12.2.0_2.x86_64-musl.xbps",
-          "sha256": "33707d0360211cf097e5862529dad59dd16f33f76eb58d47f26ffd18239df990",
+          "url": "https://missioncenter.io/build-tools/libgcc-12.2.0_3.x86_64-musl.xbps",
+          "sha256": "3417ca6a7c5ff0957c45ae251d9c7505d65a21fd9cad971db11a2149a8901a2a",
           "only-arches": [
             "x86_64"
           ]
         },
         {
           "type": "file",
-          "url": "https://alpha.de.repo.voidlinux.org/current/aarch64/libgcc-12.2.0_2.aarch64-musl.xbps",
-          "sha256": "7d1855eba3d1a947159da614a275c52115c95c9acbb57022eb2b0653c65c2fd9",
+          "url": "https://missioncenter.io/build-tools/libgcc-12.2.0_3.aarch64-musl.xbps",
+          "sha256": "8dda86feba5e5c525f21115ba5bde6a12c2c740a17e5c019590cb11fa3a4df5e",
           "only-arches": [
             "aarch64"
           ]
@@ -146,7 +146,7 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "883c9eb2e8c5fbbec2de2fd5d5a643c562ef3b07"
+          "commit": "99cb5b8aaf22d808995ad4f555ff33942ce4cbca"
         },
         {
           "type": "inline",
@@ -233,7 +233,7 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "883c9eb2e8c5fbbec2de2fd5d5a643c562ef3b07"
+          "commit": "99cb5b8aaf22d808995ad4f555ff33942ce4cbca"
         },
         {
           "type": "archive",
