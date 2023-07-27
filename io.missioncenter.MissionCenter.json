@@ -135,12 +135,12 @@
         }
       },
       "build-commands": [
-        "cd src/proxy && cargo build --offline --release --target $(arch)-unknown-linux-musl",
-        "install -v -p -m 755 src/proxy/target/$(arch)-unknown-linux-musl/release/proxy /app/bin/missioncenter-proxy-musl",
+        "cd src/sys_info_v2/proxy && cargo build --offline --release --target $(arch)-unknown-linux-musl",
+        "install -v -p -m 755 src/sys_info_v2/proxy/target/$(arch)-unknown-linux-musl/release/proxy /app/bin/missioncenter-proxy-musl",
         "rm -rf src/proxy/target",
         "",
-        "/app/bin/proot -b /app/rust-toolchain:/app/rust-toolchain -b $PWD:/build-dir -R /app/cross-rootfs /bin/sh -c 'cd /build-dir/src/proxy && /app/rust-toolchain/bin/cargo build --offline --release'",
-        "install -v -p -m 755 src/proxy/target/release/proxy /app/bin/missioncenter-proxy-glibc"
+        "/app/bin/proot -b /app/rust-toolchain:/app/rust-toolchain -b $PWD:/build-dir -R /app/cross-rootfs /bin/sh -c 'cd /build-dir/src/sys_info_v2/proxy && /app/rust-toolchain/bin/cargo build --offline --release'",
+        "install -v -p -m 755 src/sys_info_v2/proxy/target/release/proxy /app/bin/missioncenter-proxy-glibc"
       ],
       "sources": [
         {
@@ -150,8 +150,8 @@
         },
         {
           "type": "inline",
-          "contents": "[source.vendored-sources]\ndirectory = \"../../cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[target.x86_64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n\n[target.aarch64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n",
-          "dest": "src/proxy/.cargo",
+          "contents": "[source.vendored-sources]\ndirectory = \"../../../cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[target.x86_64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n\n[target.aarch64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n",
+          "dest": "src/sys_info_v2/proxy/.cargo",
           "dest-filename": "config.toml"
         },
         "cargo-sources-proxy.json"
