@@ -60,8 +60,8 @@
         },
         {
           "type": "file",
-          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-x86_64.tar.zst",
-          "sha256": "92b613a9a91ac5add802a2803af6db6d03b4cd073c7753896ea3d3020fad1a16",
+          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-x86_64_r2.tar.zst",
+          "sha256": "1a402987c082fcafe5e2b9e73d8071367f04ee96bda70ffd1679ddd859fc9da7",
           "only-arches": [
             "x86_64"
           ]
@@ -77,8 +77,8 @@
         },
         {
           "type": "file",
-          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-aarch64.tar.zst",
-          "sha256": "37b2f6aaf45b7d76d18595f1505a776d9b47201a55b1d0c6e2f0cc795aaa8df5",
+          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-aarch64_r2.tar.zst",
+          "sha256": "3cb390f9198c5a7d48c0d6e8604bc0d190864f7f0ffd4b451ad25f39c92b684a",
           "only-arches": [
             "aarch64"
           ]
@@ -125,7 +125,7 @@
       ]
     },
     {
-      "name": "missioncenter-proxy",
+      "name": "missioncenter-gatherer",
       "buildsystem": "simple",
       "build-options": {
         "append-path": "/app/rust-toolchain/bin",
@@ -136,26 +136,26 @@
         }
       },
       "build-commands": [
-        "cd src/sys_info_v2/proxy && cargo build --offline --release --target $(arch)-unknown-linux-musl",
-        "install -v -p -m 755 src/sys_info_v2/proxy/target/$(arch)-unknown-linux-musl/release/proxy /app/bin/missioncenter-proxy-musl",
-        "rm -rf src/proxy/target",
+        "cd src/sys_info_v2/gatherer && cargo build --offline --release --target $(arch)-unknown-linux-musl",
+        "install -v -p -m 755 src/sys_info_v2/gatherer/target/$(arch)-unknown-linux-musl/release/gatherer /app/bin/missioncenter-gatherer-musl",
+        "rm -rf src/gatherer/target",
         "",
-        "/app/bin/proot -b /app/rust-toolchain:/app/rust-toolchain -b $PWD:/build-dir -R /app/cross-rootfs /bin/sh -c 'cd /build-dir/src/sys_info_v2/proxy && /app/rust-toolchain/bin/cargo build --offline --release'",
-        "install -v -p -m 755 src/sys_info_v2/proxy/target/release/proxy /app/bin/missioncenter-proxy-glibc"
+        "/app/bin/proot -b /app/rust-toolchain:/app/rust-toolchain -b $PWD:/build-dir -R /app/cross-rootfs /bin/sh -c 'cd /build-dir/src/sys_info_v2/gatherer && /app/rust-toolchain/bin/cargo build --offline --release'",
+        "install -v -p -m 755 src/sys_info_v2/gatherer/target/release/gatherer /app/bin/missioncenter-gatherer-glibc"
       ],
       "sources": [
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "99cb5b8aaf22d808995ad4f555ff33942ce4cbca"
+          "commit": "dd28ee8f9846a5715da60fe458e20cdb6df773fa"
         },
         {
           "type": "inline",
           "contents": "[source.vendored-sources]\ndirectory = \"../../../cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[target.x86_64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n\n[target.aarch64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n",
-          "dest": "src/sys_info_v2/proxy/.cargo",
+          "dest": "src/sys_info_v2/gatherer/.cargo",
           "dest-filename": "config.toml"
         },
-        "cargo-sources-proxy.json"
+        "cargo-sources-gatherer.json"
       ],
       "modules": [
         {
@@ -234,19 +234,25 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "99cb5b8aaf22d808995ad4f555ff33942ce4cbca"
+          "commit": "dd28ee8f9846a5715da60fe458e20cdb6df773fa"
         },
         {
           "type": "archive",
-          "url": "https://github.com/Syllo/nvtop/archive/9a8458b541a195a0c5cadafb66e240962c852b39.tar.gz",
-          "sha256": "290542e3c2203613e18faaa769dcc5479b170c39acbe71c976a7e86ff03ea1a7",
-          "dest": "subprojects/nvtop-9a8458b541a195a0c5cadafb66e240962c852b39"
+          "url": "https://github.com/Syllo/nvtop/archive/be47f8c560487efc6e6a419d59c69bfbdb819324.tar.gz",
+          "sha256": "47c963deb1d22c75e92ca2cc7fcd1e1552cfa6da70e9d51be6a80da45249035f",
+          "dest": "subprojects/nvtop-be47f8c560487efc6e6a419d59c69bfbdb819324"
         },
         {
           "type": "shell",
           "commands": [
             "cd subprojects/nvtop-* && find ../packagefiles -type f -name 'nvtop-*' -exec sh -c 'patch -p1 < {}' \\;"
           ]
+        },
+        {
+          "type": "inline",
+          "contents": "[source.vendored-sources]\ndirectory = \"cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[source.\"https://github.com/servo/pathfinder\"]\ngit = \"https://github.com/servo/pathfinder\"\nreplace-with = \"vendored-sources\"\nrev = \"21ec6fa933547636bc6c5ee8f0dd4a0ea3fcd062\"\n",
+          "dest": ".cargo",
+          "dest-filename": "config.toml"
         },
         "cargo-sources.json"
       ],
@@ -275,7 +281,7 @@
             {
               "type": "git",
               "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler",
-              "commit": "f526cfa4d92a02be1eeb539076e22b06bc9ab887"
+              "commit": "2a39a16391122af2f3d812e478c1c1398c98b972"
             }
           ],
           "cleanup": [
