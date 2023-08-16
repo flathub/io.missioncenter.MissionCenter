@@ -5,7 +5,12 @@
   "sdk": "org.gnome.Sdk",
   "command": "missioncenter",
   "build-options": {
-    "no-debuginfo": true
+    "no-debuginfo": true,
+    "append-path": "/app/rust-toolchain/bin",
+    "env": {
+      "RUSTUP_HOME": "/app/rust-toolchain/",
+      "RUST_BACKTRACE": "full"
+    }
   },
   "finish-args": [
     "--share=network",
@@ -128,11 +133,8 @@
       "name": "missioncenter-gatherer",
       "buildsystem": "simple",
       "build-options": {
-        "append-path": "/app/rust-toolchain/bin",
         "env": {
-          "RUST_BACKTRACE": "full",
-          "RUSTUP_HOME": "/app/rust-toolchain",
-          "CARGO_HOME": "/build-dir/src/proxy/cargo"
+          "CARGO_HOME": "/build-dir/src/gatherer/cargo"
         }
       },
       "build-commands": [
@@ -147,7 +149,7 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "dd28ee8f9846a5715da60fe458e20cdb6df773fa"
+          "commit": "418535e944170ba4dc86560f17c425bd116c8355"
         },
         {
           "type": "inline",
@@ -218,13 +220,7 @@
     {
       "name": "missioncenter",
       "buildsystem": "meson",
-      "build-options": {
-        "append-path": "/app/rust-toolchain/bin",
-        "env": {
-          "RUST_BACKTRACE": "full",
-          "RUSTUP_HOME": "/app/rust-toolchain/"
-        }
-      },
+      "builddir": true,
       "config-opts": [
         "-Dbuildtype=release",
         "-Dflatpak=true",
@@ -234,7 +230,7 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "dd28ee8f9846a5715da60fe458e20cdb6df773fa"
+          "commit": "418535e944170ba4dc86560f17c425bd116c8355"
         },
         {
           "type": "archive",
