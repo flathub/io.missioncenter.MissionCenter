@@ -113,7 +113,7 @@
           "type": "archive",
           "url": "https://missioncenter.io/build-tools/rust-toolchain-1.72.1-musl-aarch64.tar.zst",
           "dest": "rust-toolchain-musl",
-          "sha256": "9d36a0600542a92ed0250e81a948183e83973cf49873097d11be4e8109b815b2",
+          "sha256": "51fb744837ca0a558c3154d2228abaf66d172b082e6c4afce57e1828294f8e2e",
           "only-arches": [
             "aarch64"
           ]
