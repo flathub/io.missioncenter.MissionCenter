@@ -1,0 +1,19 @@
+#!/bin/bash
+
+declare -a finalargs
+finalargs=()
+
+for o in "$@"; do
+    if [ "$o" = "-Wl,--no-undefined-version" ]; then
+        continue
+    fi
+
+    if [[ "$o" == "--target="* ]]; then
+        continue
+    fi
+
+    finalargs+=("$o")
+done
+
+exec /app/zig/zig cc "${finalargs[@]}"
+
