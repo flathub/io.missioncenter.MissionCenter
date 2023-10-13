@@ -149,6 +149,10 @@
         {
           "type": "file",
           "path": "clang"
+        },
+        {
+          "type": "file",
+          "path": "ar"
         }
       ],
       "cleanup": [
