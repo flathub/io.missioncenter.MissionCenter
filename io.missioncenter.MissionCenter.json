@@ -129,8 +129,8 @@
         },
         {
           "type": "file",
-          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-aarch64_r3.tar.zst",
-          "sha256": "0024b425952bda3626a4652ed4a1f9ab5f28da2aef64d725a867132c5b5ecd12",
+          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-aarch64_r2.tar.zst",
+          "sha256": "3cb390f9198c5a7d48c0d6e8604bc0d190864f7f0ffd4b451ad25f39c92b684a",
           "only-arches": [
             "aarch64"
           ]
