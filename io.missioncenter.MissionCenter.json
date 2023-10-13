@@ -86,8 +86,8 @@
         },
         {
           "type": "file",
-          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-x86_64_r2.tar.zst",
-          "sha256": "1a402987c082fcafe5e2b9e73d8071367f04ee96bda70ffd1679ddd859fc9da7",
+          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-x86_64_r3.tar.zst",
+          "sha256": "9a6edf5ef372cabd5c8333257d99f3a81809cd710e9068afcdf41f645b95a019",
           "only-arches": [
             "x86_64"
           ]
@@ -129,8 +129,8 @@
         },
         {
           "type": "file",
-          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-aarch64_r2.tar.zst",
-          "sha256": "3cb390f9198c5a7d48c0d6e8604bc0d190864f7f0ffd4b451ad25f39c92b684a",
+          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-aarch64_r3.tar.zst",
+          "sha256": "0024b425952bda3626a4652ed4a1f9ab5f28da2aef64d725a867132c5b5ecd12",
           "only-arches": [
             "aarch64"
           ]
@@ -193,7 +193,8 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "e14540ae99b71db86a4b4b40a3b31d5f2ee159fa"
+          "commit": "84dea405c7a38b8f7ab8eb0277b56b3b0a6d2349",
+          "tag": "v0.3.3"
         },
         {
           "type": "archive",
@@ -279,6 +280,7 @@
       "builddir": true,
       "config-opts": [
         "-Dbuildtype=release",
+        "-Db_lto=true",
         "-Dflatpak=true",
         "-Dcargo_env='CARGO_HOME=/run/build/missioncenter/cargo'"
       ],
@@ -286,19 +288,8 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "e14540ae99b71db86a4b4b40a3b31d5f2ee159fa"
-        },
-        {
-          "type": "archive",
-          "url": "https://github.com/Syllo/nvtop/archive/be47f8c560487efc6e6a419d59c69bfbdb819324.tar.gz",
-          "sha256": "47c963deb1d22c75e92ca2cc7fcd1e1552cfa6da70e9d51be6a80da45249035f",
-          "dest": "subprojects/nvtop-be47f8c560487efc6e6a419d59c69bfbdb819324"
-        },
-        {
-          "type": "shell",
-          "commands": [
-            "cd subprojects/nvtop-* && find ../packagefiles -type f -name 'nvtop-*' -exec sh -c 'patch -p1 < {}' \\;"
-          ]
+          "commit": "84dea405c7a38b8f7ab8eb0277b56b3b0a6d2349",
+          "tag": "v0.3.3"
         },
         {
           "type": "inline",
