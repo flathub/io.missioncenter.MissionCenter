@@ -6,9 +6,9 @@
   "command": "missioncenter",
   "build-options": {
     "no-debuginfo": true,
-    "append-path": "/app/rust-toolchain/bin",
+    "append-path": "/app/rust-toolchain-glibc/cargo/bin",
     "env": {
-      "RUSTUP_HOME": "/app/rust-toolchain/",
+      "RUSTUP_HOME": "/app/rust-toolchain-glibc/rustup",
       "RUST_BACKTRACE": "full"
     }
   },
@@ -50,44 +50,109 @@
       "name": "build-tools",
       "buildsystem": "simple",
       "build-commands": [
-        "echo 'Extract the cross-toolchain manually, it fails otherwise.'",
-        "mkdir cross-rootfs && cd cross-rootfs && tar xf ../ubuntu-14.04-*.tar.zst && rm ../ubuntu-14.04-*.tar.zst",
+        "mkdir rootfs-glibc && cd rootfs-glibc && tar xf ../ubuntu-14.04-*.tar.zst && rm ../ubuntu-14.04-*.tar.zst",
+        "cp -a clang rootfs-glibc/usr/bin && ln -sf clang rootfs-glibc/usr/bin/cc",
+        "cp -a ar rootfs-glibc/usr/bin",
+        "rm -f rootfs-glibc/usr/lib/$(arch)-linux-gnu/libEGL.so && cp -Lf rootfs-glibc/usr/lib/$(arch)-linux-gnu/mesa-egl/libEGL.so rootfs-glibc/usr/lib/$(arch)-linux-gnu/libEGL.so",
+        "rm -f rootfs-glibc/usr/lib/$(arch)-linux-gnu/libEGL.so.1 && cp -Lf rootfs-glibc/usr/lib/$(arch)-linux-gnu/mesa-egl/libEGL.so rootfs-glibc/usr/lib/$(arch)-linux-gnu/libEGL.so.1",
+        "mkdir rootfs-musl && cd rootfs-musl && tar xf ../alpine-3.9-*.tar.zst && rm ../alpine-3.9-*.tar.zst",
+        "mv clang rootfs-musl/usr/bin && ln -sf clang rootfs-musl/usr/bin/cc",
         "mv * /app/"
       ],
       "sources": [
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-1.71.0-x86_64.tar.zst",
-          "dest": "rust-toolchain",
-          "sha256": "b5afacde977aa18a59385628dd8ec2bf6f18738b27e009df0c750efc4d5578ee",
-          "only-arches": [
-            "x86_64"
-          ]
-        },
-        {
-          "type": "file",
-          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-x86_64_r2.tar.zst",
-          "sha256": "1a402987c082fcafe5e2b9e73d8071367f04ee96bda70ffd1679ddd859fc9da7",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-1.72.1-glibc-x86_64.tar.zst",
+          "dest": "rust-toolchain-glibc",
+          "sha256": "ccf1a6ccd26ccf96f3a410e44a0827c5bd15644790b30387c2735b1b6fdb5130",
           "only-arches": [
             "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-1.71.0-aarch64.tar.zst",
-          "dest": "rust-toolchain",
-          "sha256": "5bac97fe7f6c16529e952ced5f0e99b614fa246445a092473ad31ba59929b34b",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-1.72.1-musl-x86_64.tar.zst",
+          "dest": "rust-toolchain-musl",
+          "sha256": "9d36a0600542a92ed0250e81a948183e83973cf49873097d11be4e8109b815b2",
+          "only-arches": [
+            "x86_64"
+          ]
+        },
+        {
+          "type": "archive",
+          "url": "https://ziglang.org/builds/zig-linux-x86_64-0.12.0-dev.415+5af5d87ad.tar.xz",
+          "dest": "zig",
+          "sha256": "7923f3dbd98916565971d6d9f4fef84d99fcf2c4f39842bf64c4c1a29148c905",
+          "only-arches": [
+            "x86_64"
+          ]
+        },
+        {
+          "type": "file",
+          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-x86_64_r3.tar.zst",
+          "sha256": "9a6edf5ef372cabd5c8333257d99f3a81809cd710e9068afcdf41f645b95a019",
+          "only-arches": [
+            "x86_64"
+          ]
+        },
+        {
+          "type": "file",
+          "url": "https://missioncenter.io/build-tools/alpine-3.9-x86_64.tar.zst",
+          "sha256": "91d3a6cc7f1e835eb6fc2172f98ad224962f1ea5e2a1ef99783fdaa3bb7633b1",
+          "only-arches": [
+            "x86_64"
+          ]
+        },
+        {
+          "type": "archive",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-1.72.1-glibc-aarch64.tar.zst",
+          "dest": "rust-toolchain-glibc",
+          "sha256": "896e83bac3b0d47bc7b27151bc74f9164d6b92c55f1faaf690d3715f31c53297",
+          "only-arches": [
+            "aarch64"
+          ]
+        },
+        {
+          "type": "archive",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-1.72.1-musl-aarch64.tar.zst",
+          "dest": "rust-toolchain-musl",
+          "sha256": "51fb744837ca0a558c3154d2228abaf66d172b082e6c4afce57e1828294f8e2e",
+          "only-arches": [
+            "aarch64"
+          ]
+        },
+        {
+          "type": "archive",
+          "url": "https://ziglang.org/builds/zig-linux-aarch64-0.12.0-dev.415+5af5d87ad.tar.xz",
+          "dest": "zig",
+          "sha256": "5139d9e23ee34d9b8715847eb6ba3eeed87a819a332b4a303313c47836cff4ff",
           "only-arches": [
             "aarch64"
           ]
         },
         {
           "type": "file",
-          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-aarch64_r2.tar.zst",
-          "sha256": "3cb390f9198c5a7d48c0d6e8604bc0d190864f7f0ffd4b451ad25f39c92b684a",
+          "url": "https://missioncenter.io/build-tools/ubuntu-14.04-aarch64_r3.tar.zst",
+          "sha256": "0024b425952bda3626a4652ed4a1f9ab5f28da2aef64d725a867132c5b5ecd12",
           "only-arches": [
             "aarch64"
           ]
+        },
+        {
+          "type": "file",
+          "url": "https://missioncenter.io/build-tools/alpine-3.9-aarch64.tar.zst",
+          "sha256": "141729722ab525d44ebcdd3353b60b18c4d871cde964d83e6ae8c9b72fbb8915",
+          "only-arches": [
+            "aarch64"
+          ]
+        },
+        {
+          "type": "file",
+          "path": "clang"
+        },
+        {
+          "type": "file",
+          "path": "ar"
         }
       ],
       "cleanup": [
@@ -100,30 +165,11 @@
       "config-opts": [
         "--prefix=/app/musl-libc"
       ],
-      "post-install": [
-        "tar xf libgcc*.xbps && mv usr/lib/libgcc_s.so.1 /app/musl-libc/lib/ && ln -s libgcc_s.so.1 /app/musl-libc/lib/libgcc_s.so && rm -rf usr libgcc*.xbps"
-      ],
       "sources": [
         {
           "type": "archive",
           "url": "https://musl.libc.org/releases/musl-1.2.3.tar.gz",
           "sha256": "7d5b0b6062521e4627e099e4c9dc8248d32a30285e959b7eecaa780cf8cfd4a4"
-        },
-        {
-          "type": "file",
-          "url": "https://missioncenter.io/build-tools/libgcc-12.2.0_3.x86_64-musl.xbps",
-          "sha256": "3417ca6a7c5ff0957c45ae251d9c7505d65a21fd9cad971db11a2149a8901a2a",
-          "only-arches": [
-            "x86_64"
-          ]
-        },
-        {
-          "type": "file",
-          "url": "https://missioncenter.io/build-tools/libgcc-12.2.0_3.aarch64-musl.xbps",
-          "sha256": "8dda86feba5e5c525f21115ba5bde6a12c2c740a17e5c019590cb11fa3a4df5e",
-          "only-arches": [
-            "aarch64"
-          ]
         }
       ],
       "cleanup": [
@@ -135,27 +181,43 @@
       "buildsystem": "simple",
       "build-options": {
         "env": {
-          "CARGO_HOME": "/build-dir/src/gatherer/cargo"
+          "CARGO_HOME": "/build-dir/src/gatherer/cargo",
+          "CC": "clang"
         }
       },
       "build-commands": [
-        "cd src/sys_info_v2/gatherer && cargo build --offline --release --target $(arch)-unknown-linux-musl",
-        "install -v -p -m 755 src/sys_info_v2/gatherer/target/$(arch)-unknown-linux-musl/release/gatherer /app/bin/missioncenter-gatherer-musl",
-        "rm -rf src/gatherer/target",
+        "mkdir -p src/sys_info_v2/gatherer/target/release/build/native && cp -ar nvtop-* src/sys_info_v2/gatherer/target/release/build/native/",
+        "/app/bin/proot -b /app/rust-toolchain-glibc:/app/rust-toolchain-glibc -b /app/zig:/app/zig -b $PWD:/build-dir -R /app/rootfs-glibc /bin/sh -c 'cd /build-dir/src/sys_info_v2/gatherer && env PATH=/app/rust-toolchain-glibc/cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/app/rust-toolchain-glibc/rustup cargo build --offline --release'",
+        "install -v -p -m 755 src/sys_info_v2/gatherer/target/release/gatherer /app/bin/missioncenter-gatherer-glibc",
         "",
-        "/app/bin/proot -b /app/rust-toolchain:/app/rust-toolchain -b $PWD:/build-dir -R /app/cross-rootfs /bin/sh -c 'cd /build-dir/src/sys_info_v2/gatherer && /app/rust-toolchain/bin/cargo build --offline --release'",
-        "install -v -p -m 755 src/sys_info_v2/gatherer/target/release/gatherer /app/bin/missioncenter-gatherer-glibc"
+        "rm -rf src/sys_info_v2/gatherer/target",
+        "",
+        "mkdir -p src/sys_info_v2/gatherer/target/release/build/native && mv nvtop-* src/sys_info_v2/gatherer/target/release/build/native/",
+        "/app/bin/proot -b /app/rust-toolchain-musl:/app/rust-toolchain-musl -b /app/zig:/app/zig -b $PWD:/build-dir -R /app/rootfs-musl /bin/sh -c 'cd /build-dir/src/sys_info_v2/gatherer && env PATH=/app/rust-toolchain-musl/cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/app/rust-toolchain-musl/rustup cargo build --offline --release '",
+        "install -v -p -m 755 src/sys_info_v2/gatherer/target/release/gatherer /app/bin/missioncenter-gatherer-musl"
       ],
       "sources": [
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "9106f93cedaf5405e056e575803791912fea4957",
-          "tag": "v0.3.2"
+          "commit": "84dea405c7a38b8f7ab8eb0277b56b3b0a6d2349",
+          "tag": "v0.3.3"
+        },
+        {
+          "type": "archive",
+          "url": "https://github.com/Syllo/nvtop/archive/be47f8c560487efc6e6a419d59c69bfbdb819324.tar.gz",
+          "sha256": "47c963deb1d22c75e92ca2cc7fcd1e1552cfa6da70e9d51be6a80da45249035f",
+          "dest": "nvtop-be47f8c560487efc6e6a419d59c69bfbdb819324"
+        },
+        {
+          "type": "shell",
+          "commands": [
+            "cd nvtop-* && find ../src/sys_info_v2/gatherer/3rdparty/nvtop/patches -type f -iname \"*.patch\" -exec sh -c 'patch -p1 < {}' \\;"
+          ]
         },
         {
           "type": "inline",
-          "contents": "[source.vendored-sources]\ndirectory = \"../../../cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[target.x86_64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n\n[target.aarch64-unknown-linux-musl]\nlinker = \"/app/musl-libc/bin/musl-gcc\"\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n",
+          "contents": "[source.vendored-sources]\ndirectory = \"../../../cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[target.x86_64-unknown-linux-musl]\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n\n[target.aarch64-unknown-linux-musl]\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n",
           "dest": "src/sys_info_v2/gatherer/.cargo",
           "dest-filename": "config.toml"
         },
@@ -225,6 +287,7 @@
       "builddir": true,
       "config-opts": [
         "-Dbuildtype=release",
+        "-Db_lto=true",
         "-Dflatpak=true",
         "-Dcargo_env='CARGO_HOME=/run/build/missioncenter/cargo'"
       ],
@@ -232,20 +295,8 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "9106f93cedaf5405e056e575803791912fea4957",
-          "tag": "v0.3.2"
-        },
-        {
-          "type": "archive",
-          "url": "https://github.com/Syllo/nvtop/archive/be47f8c560487efc6e6a419d59c69bfbdb819324.tar.gz",
-          "sha256": "47c963deb1d22c75e92ca2cc7fcd1e1552cfa6da70e9d51be6a80da45249035f",
-          "dest": "subprojects/nvtop-be47f8c560487efc6e6a419d59c69bfbdb819324"
-        },
-        {
-          "type": "shell",
-          "commands": [
-            "cd subprojects/nvtop-* && find ../packagefiles -type f -name 'nvtop-*' -exec sh -c 'patch -p1 < {}' \\;"
-          ]
+          "commit": "84dea405c7a38b8f7ab8eb0277b56b3b0a6d2349",
+          "tag": "v0.3.3"
         },
         {
           "type": "inline",
