@@ -51,7 +51,7 @@
       "buildsystem": "simple",
       "build-commands": [
         "mkdir rootfs-glibc && cd rootfs-glibc && tar xf ../ubuntu-14.04-*.tar.zst && rm ../ubuntu-14.04-*.tar.zst",
-        "cp -a clang rootfs-glibc/usr/bin && ln -sf clang rootfs-glibc/usr/bin/cc",
+        "cp -a clang rootfs-glibc/usr/bin && ln -sf clang rootfs-glibc/usr/bin/cc && cp -Lf rootfs-glibc/usr/lib/$(arch)-linux-gnu/mesa-egl/libEGL.so.1 rootfs-glibc/usr/lib/$(arch)-linux-gnu/libEGL.so.1 && cp -Lf rootfs-glibc/usr/lib/$(arch)-linux-gnu/mesa-egl/libEGL.so rootfs-glibc/usr/lib/$(arch)-linux-gnu/libEGL.so",
         "mkdir rootfs-musl && cd rootfs-musl && tar xf ../alpine-3.9-*.tar.zst && rm ../alpine-3.9-*.tar.zst",
         "mv clang rootfs-musl/usr/bin && ln -sf clang rootfs-musl/usr/bin/cc",
         "mv * /app/"
