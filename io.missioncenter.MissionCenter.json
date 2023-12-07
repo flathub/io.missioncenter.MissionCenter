@@ -1,7 +1,7 @@
 {
   "app-id": "io.missioncenter.MissionCenter",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "44",
+  "runtime-version": "45",
   "sdk": "org.gnome.Sdk",
   "command": "missioncenter",
   "build-options": {
@@ -29,7 +29,8 @@
     "--filesystem=xdg-data/flatpak/app:ro",
     "--filesystem=/var/lib/flatpak/app:ro",
     "--filesystem=/snap:ro",
-    "--env=XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share:/run/host/user-share:/run/host/share:/var/lib/flatpak/exports/share:~/.local/share/flatpak/exports/share"
+    "--env=XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share:/run/host/user-share:/run/host/share:/var/lib/flatpak/exports/share:~/.local/share/flatpak/exports/share",
+    "--env=LD_PRELOAD="
   ],
   "cleanup": [
     "/sbin",
@@ -202,7 +203,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler",
-          "commit": "2a39a16391122af2f3d812e478c1c1398c98b972"
+          "commit": "80aaee374d332b0c7e04a132cce9c472d6427a1e"
         }
       ],
       "cleanup": [
@@ -247,11 +248,11 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "54fafe0754c76b21bd44660ca75374d9691f85d8"
+          "commit": "116da6117e1770e36c86283994afe40462aee627"
         },
         {
           "type": "inline",
-          "contents": "[source.vendored-sources]\ndirectory = \"cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[source.\"https://github.com/servo/pathfinder\"]\ngit = \"https://github.com/servo/pathfinder\"\nreplace-with = \"vendored-sources\"\nrev = \"21ec6fa933547636bc6c5ee8f0dd4a0ea3fcd062\"\n",
+          "contents": "[source.vendored-sources]\ndirectory = \"cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[source.\"https://github.com/kicsyromy/pathfinder\"]\ngit = \"https://github.com/kicsyromy/pathfinder\"\nreplace-with = \"vendored-sources\"\nrev = \"ec56924f660e6faa83c81c6b62b3c69b9a9fa00e\"\n",
           "dest": ".cargo",
           "dest-filename": "config.toml"
         },
@@ -275,20 +276,20 @@
             "rm -rf src/sys_info_v2/gatherer/target",
             "",
             "mkdir -p src/sys_info_v2/gatherer/target/release/build/native && mv nvtop-* src/sys_info_v2/gatherer/target/release/build/native/",
-            "/app/bin/proot -b /app/rust-toolchain-musl:/app/rust-toolchain-musl -b /app/zig:/app/zig -b $PWD:/build-dir -R /app/rootfs-musl /bin/sh -c 'cd /build-dir/src/sys_info_v2/gatherer && env PATH=/app/rust-toolchain-musl/cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/app/rust-toolchain-musl/rustup cargo build --offline --release '",
+            "/app/bin/proot -b /app/rust-toolchain-musl:/app/rust-toolchain-musl -b /app/zig:/app/zig -b $PWD:/build-dir -R /app/rootfs-musl /bin/sh -c 'cd /build-dir/src/sys_info_v2/gatherer && env PATH=/app/rust-toolchain-musl/cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/app/rust-toolchain-musl/rustup cargo build --offline --release'",
             "install -v -p -m 755 src/sys_info_v2/gatherer/target/release/gatherer /app/bin/missioncenter-gatherer-musl"
           ],
           "sources": [
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "54fafe0754c76b21bd44660ca75374d9691f85d8"
+              "commit": "116da6117e1770e36c86283994afe40462aee627"
             },
             {
               "type": "archive",
-              "url": "https://github.com/Syllo/nvtop/archive/be47f8c560487efc6e6a419d59c69bfbdb819324.tar.gz",
-              "sha256": "47c963deb1d22c75e92ca2cc7fcd1e1552cfa6da70e9d51be6a80da45249035f",
-              "dest": "nvtop-be47f8c560487efc6e6a419d59c69bfbdb819324"
+              "url": "https://github.com/Syllo/nvtop/archive/45a1796375cd617d16167869bb88e5e69c809468.tar.gz",
+              "sha256": "ec500c9d7e9fb63b899460ad00a0c1829df72abf5b424066206d832ed87f8667",
+              "dest": "nvtop-45a1796375cd617d16167869bb88e5e69c809468"
             },
             {
               "type": "shell",

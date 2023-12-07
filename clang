@@ -12,8 +12,33 @@ for o in "$@"; do
         continue
     fi
 
+    if [[ "$o" == "-march="* ]]; then
+        continue
+    fi
+
+    if [[ "$o" == "--march="* ]]; then
+        continue
+    fi
+
+    if [[ "$o" == "-mtune="* ]]; then
+        continue
+    fi
+
+    if [[ "$o" == "--mtune="* ]]; then
+        continue
+    fi
+
     finalargs+=("$o")
 done
 
-exec /app/zig/zig cc "${finalargs[@]}"
+if [ "$(arch)" = "x86_64" ]; then
+    MARCH="-march=x86_64_v2"
+elif [ "$(arch)" = "aarch64" ]; then
+    # MARCH="-march=armv8-a"
+    MARCH=""
+else 
+    MARCH=""
+fi
+
+exec /app/zig/zig cc $MARCH "${finalargs[@]}"
 
