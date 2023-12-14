@@ -248,8 +248,8 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "febf0ead9f6d5b4c96200d38d68422a6d669b30d",
-          "tag": "v0.4.1"
+          "commit": "0594f5b01554bbe1ea77c103c086d359da6718b4",
+          "tag": "v0.4.2"
         },
         {
           "type": "inline",
@@ -284,8 +284,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "febf0ead9f6d5b4c96200d38d68422a6d669b30d",
-              "tag": "v0.4.1"
+              "commit": "0594f5b01554bbe1ea77c103c086d359da6718b4",
+              "tag": "v0.4.2"
             },
             {
               "type": "archive",
