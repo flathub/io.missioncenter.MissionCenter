@@ -1204,19 +1204,6 @@
   {
     "type": "archive",
     "archive-type": "tar-gzip",
-    "url": "https://static.crates.io/crates/hermit-abi/hermit-abi-0.3.3.crate",
-    "sha256": "d77f7ec81a6d05a3abb01ab6eb7590f6083d08449fe5a1c8b1e620283546ccb7",
-    "dest": "cargo/vendor/hermit-abi-0.3.3"
-  },
-  {
-    "type": "inline",
-    "contents": "{\"package\": \"d77f7ec81a6d05a3abb01ab6eb7590f6083d08449fe5a1c8b1e620283546ccb7\", \"files\": {}}",
-    "dest": "cargo/vendor/hermit-abi-0.3.3",
-    "dest-filename": ".cargo-checksum.json"
-  },
-  {
-    "type": "archive",
-    "archive-type": "tar-gzip",
     "url": "https://static.crates.io/crates/image/image-0.23.14.crate",
     "sha256": "24ffcb7e7244a9bf19d35bf2883b9c080c4ced3c07a9895572178cdb8f13f6a1",
     "dest": "cargo/vendor/image-0.23.14"
@@ -1589,19 +1576,6 @@
     "type": "inline",
     "contents": "{\"package\": \"39e3200413f237f41ab11ad6d161bc7239c84dcb631773ccd7de3dfe4b5c267c\", \"files\": {}}",
     "dest": "cargo/vendor/num-traits-0.2.17",
-    "dest-filename": ".cargo-checksum.json"
-  },
-  {
-    "type": "archive",
-    "archive-type": "tar-gzip",
-    "url": "https://static.crates.io/crates/num_cpus/num_cpus-1.16.0.crate",
-    "sha256": "4161fcb6d602d4d2081af7c3a45852d875a03dd337a6bfdd6e06407b61342a43",
-    "dest": "cargo/vendor/num_cpus-1.16.0"
-  },
-  {
-    "type": "inline",
-    "contents": "{\"package\": \"4161fcb6d602d4d2081af7c3a45852d875a03dd337a6bfdd6e06407b61342a43\", \"files\": {}}",
-    "dest": "cargo/vendor/num_cpus-1.16.0",
     "dest-filename": ".cargo-checksum.json"
   },
   {

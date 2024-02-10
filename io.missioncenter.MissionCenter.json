@@ -59,6 +59,7 @@
         "mkdir rootfs-musl && cd rootfs-musl && tar xf ../alpine-3.9-*.tar.zst && rm ../alpine-3.9-*.tar.zst",
         "cp -a clang rootfs-musl/usr/bin",
         "cp -a ar rootfs-musl/usr/bin",
+        "ln -sf libgbm.so.1 rootfs-musl/usr/lib/libgcc_s.so",
         "",
         "mv * /app/"
       ],
@@ -163,23 +164,6 @@
       ]
     },
     {
-      "name": "musl-libc",
-      "buildsystem": "autotools",
-      "config-opts": [
-        "--prefix=/app/musl-libc"
-      ],
-      "sources": [
-        {
-          "type": "archive",
-          "url": "https://musl.libc.org/releases/musl-1.2.3.tar.gz",
-          "sha256": "7d5b0b6062521e4627e099e4c9dc8248d32a30285e959b7eecaa780cf8cfd4a4"
-        }
-      ],
-      "cleanup": [
-        "*"
-      ]
-    },
-    {
       "name": "eudev",
       "buildsystem": "autotools",
       "cleanup": [
@@ -211,30 +195,6 @@
       ]
     },
     {
-      "name": "static-binaries",
-      "buildsystem": "simple",
-      "build-commands": [
-        "/bin/true"
-      ],
-      "modules": [
-        {
-          "name": "dmidecode",
-          "buildsystem": "simple",
-          "build-commands": [
-            "make CC=/app/musl-libc/bin/musl-gcc CFLAGS=\"-static -I/app/musl-libc/include\" LDFLAGS=\"-static -L/app/musl-libc/lib\" install-bin prefix=/app",
-            "install -v -p -m 755 /app/sbin/dmidecode /app/bin/dmidecode"
-          ],
-          "sources": [
-            {
-              "type": "archive",
-              "url": "https://git.savannah.nongnu.org/cgit/dmidecode.git/snapshot/dmidecode-3-5.tar.gz",
-              "sha256": "8b1465a1afa71f9ffb0206ba5ffc435c46c0281d089552578f600879728a1b23"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "missioncenter",
       "buildsystem": "meson",
       "builddir": true,
@@ -248,8 +208,8 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "e353346974d7d43f2cd070756ef3fe2fc3709c8e",
-          "tag": "v0.4.3"
+          "commit": "96917c9e8215bd2e3545bac72907f9ec64f56d27",
+          "tag": "v0.4.4"
         },
         {
           "type": "inline",
@@ -284,8 +244,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "e353346974d7d43f2cd070756ef3fe2fc3709c8e",
-              "tag": "v0.4.3"
+              "commit": "96917c9e8215bd2e3545bac72907f9ec64f56d27",
+              "tag": "v0.4.4"
             },
             {
               "type": "archive",
@@ -301,7 +261,7 @@
             },
             {
               "type": "inline",
-              "contents": "[source.vendored-sources]\ndirectory = \"../../../cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[target.x86_64-unknown-linux-musl]\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n\n[target.aarch64-unknown-linux-musl]\nrustflags = [ '-C', 'target-feature=-crt-static' ]\n",
+              "contents": "[source.vendored-sources]\ndirectory = \"../../../cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[target.x86_64-unknown-linux-musl]\nrustflags = [ '-C', 'target-feature=-crt-static', '-C', 'link-args=-lunwind' ]\n\n[target.aarch64-unknown-linux-musl]\nrustflags = [ '-C', 'target-feature=-crt-static', '-C', 'link-args=-lunwind' ]\n",
               "dest": "src/sys_info_v2/gatherer/.cargo",
               "dest-filename": "config.toml"
             },
