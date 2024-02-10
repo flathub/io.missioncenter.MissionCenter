@@ -67,6 +67,19 @@
   {
     "type": "archive",
     "archive-type": "tar-gzip",
+    "url": "https://static.crates.io/crates/bincode/bincode-1.3.3.crate",
+    "sha256": "b1f45e9417d87227c7a56d22e471c6206462cba514c7590c09aff4cf6d1ddcad",
+    "dest": "cargo/vendor/bincode-1.3.3"
+  },
+  {
+    "type": "inline",
+    "contents": "{\"package\": \"b1f45e9417d87227c7a56d22e471c6206462cba514c7590c09aff4cf6d1ddcad\", \"files\": {}}",
+    "dest": "cargo/vendor/bincode-1.3.3",
+    "dest-filename": ".cargo-checksum.json"
+  },
+  {
+    "type": "archive",
+    "archive-type": "tar-gzip",
     "url": "https://static.crates.io/crates/bitflags/bitflags-1.3.2.crate",
     "sha256": "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a",
     "dest": "cargo/vendor/bitflags-1.3.2"
@@ -522,19 +535,6 @@
   {
     "type": "archive",
     "archive-type": "tar-gzip",
-    "url": "https://static.crates.io/crates/hermit-abi/hermit-abi-0.3.3.crate",
-    "sha256": "d77f7ec81a6d05a3abb01ab6eb7590f6083d08449fe5a1c8b1e620283546ccb7",
-    "dest": "cargo/vendor/hermit-abi-0.3.3"
-  },
-  {
-    "type": "inline",
-    "contents": "{\"package\": \"d77f7ec81a6d05a3abb01ab6eb7590f6083d08449fe5a1c8b1e620283546ccb7\", \"files\": {}}",
-    "dest": "cargo/vendor/hermit-abi-0.3.3",
-    "dest-filename": ".cargo-checksum.json"
-  },
-  {
-    "type": "archive",
-    "archive-type": "tar-gzip",
     "url": "https://static.crates.io/crates/hex/hex-0.4.3.crate",
     "sha256": "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70",
     "dest": "cargo/vendor/hex-0.4.3"
@@ -730,14 +730,14 @@
   {
     "type": "archive",
     "archive-type": "tar-gzip",
-    "url": "https://static.crates.io/crates/num_cpus/num_cpus-1.16.0.crate",
-    "sha256": "4161fcb6d602d4d2081af7c3a45852d875a03dd337a6bfdd6e06407b61342a43",
-    "dest": "cargo/vendor/num_cpus-1.16.0"
+    "url": "https://static.crates.io/crates/nix/nix-0.27.1.crate",
+    "sha256": "2eb04e9c688eff1c89d72b407f168cf79bb9e867a9d3323ed6c01519eb9cc053",
+    "dest": "cargo/vendor/nix-0.27.1"
   },
   {
     "type": "inline",
-    "contents": "{\"package\": \"4161fcb6d602d4d2081af7c3a45852d875a03dd337a6bfdd6e06407b61342a43\", \"files\": {}}",
-    "dest": "cargo/vendor/num_cpus-1.16.0",
+    "contents": "{\"package\": \"2eb04e9c688eff1c89d72b407f168cf79bb9e867a9d3323ed6c01519eb9cc053\", \"files\": {}}",
+    "dest": "cargo/vendor/nix-0.27.1",
     "dest-filename": ".cargo-checksum.json"
   },
   {
@@ -829,19 +829,6 @@
     "type": "inline",
     "contents": "{\"package\": \"5267fca4496028628a95160fc423a33e8b2e6af8a5302579e322e4b520293cae\", \"files\": {}}",
     "dest": "cargo/vendor/quote-1.0.33",
-    "dest-filename": ".cargo-checksum.json"
-  },
-  {
-    "type": "archive",
-    "archive-type": "tar-gzip",
-    "url": "https://static.crates.io/crates/raw-cpuid/raw-cpuid-11.0.1.crate",
-    "sha256": "9d86a7c4638d42c44551f4791a20e687dbb4c3de1f33c43dd71e355cd429def1",
-    "dest": "cargo/vendor/raw-cpuid-11.0.1"
-  },
-  {
-    "type": "inline",
-    "contents": "{\"package\": \"9d86a7c4638d42c44551f4791a20e687dbb4c3de1f33c43dd71e355cd429def1\", \"files\": {}}",
-    "dest": "cargo/vendor/raw-cpuid-11.0.1",
     "dest-filename": ".cargo-checksum.json"
   },
   {
