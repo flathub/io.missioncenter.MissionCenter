@@ -1,7 +1,7 @@
 {
   "app-id": "io.missioncenter.MissionCenter",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "45",
+  "runtime-version": "46",
   "sdk": "org.gnome.Sdk",
   "command": "missioncenter",
   "build-options": {
@@ -66,18 +66,18 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.73.0-x86_64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.76.0-x86_64.tar.zst",
           "dest": "rust-toolchain-glibc",
-          "sha256": "aab4e8cbef2018f46ffca257d36f52118f7db7b5d73810f712aea06e585a7a78",
+          "sha256": "68e0a87381b5af9092f81afc79eb1d1e5bd36e5cde058d3ba43f80c0fb7ae03b",
           "only-arches": [
             "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.73.0-x86_64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.76.0-x86_64.tar.zst",
           "dest": "rust-toolchain-musl",
-          "sha256": "59704ef184315752649de0043bf60cf32e98440874c8a58ba9b91ecee1345211",
+          "sha256": "d9e1ebbf2386daec4394ec7dd672d6312ddce906cf359b2a2526b1b6cb98ca59",
           "only-arches": [
             "x86_64"
           ]
@@ -109,18 +109,18 @@
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.73.0-aarch64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.76.0-aarch64.tar.zst",
           "dest": "rust-toolchain-glibc",
-          "sha256": "3522e501ea0e5e9dcab3bd4159c8cacd1232bac31beb840d3017b884da243174",
+          "sha256": "9c80e711ba2740b6f5c66c1d5bf95532f94c7cb7cb6068af942b7e89b24bc467",
           "only-arches": [
             "aarch64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.73.0-aarch64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.76.0-aarch64.tar.zst",
           "dest": "rust-toolchain-musl",
-          "sha256": "b2ba680f8d4135cc6dc2b9159a03902b67e081f4929e622543239d2de7ed486d",
+          "sha256": "62ec468015a3e2b61c89918c1fb6b5640ef84f593b29475cf90fad62238ffd4f",
           "only-arches": [
             "aarch64"
           ]
@@ -187,7 +187,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler",
-          "commit": "80aaee374d332b0c7e04a132cce9c472d6427a1e"
+          "commit": "d47955c5a20b2f7cf85ff25a00b02160883aa0b1"
         }
       ],
       "cleanup": [
@@ -208,12 +208,12 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "96917c9e8215bd2e3545bac72907f9ec64f56d27",
-          "tag": "v0.4.4"
+          "commit": "5e47e9085f701ebe5b6f4b79ad1c511b3ceb2ad0",
+          "tag": "v0.4.5"
         },
         {
           "type": "inline",
-          "contents": "[source.vendored-sources]\ndirectory = \"cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[source.\"https://github.com/kicsyromy/pathfinder\"]\ngit = \"https://github.com/kicsyromy/pathfinder\"\nreplace-with = \"vendored-sources\"\nrev = \"ec56924f660e6faa83c81c6b62b3c69b9a9fa00e\"\n",
+          "contents": "[source.vendored-sources]\ndirectory = \"cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n",
           "dest": ".cargo",
           "dest-filename": "config.toml"
         },
@@ -244,8 +244,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "96917c9e8215bd2e3545bac72907f9ec64f56d27",
-              "tag": "v0.4.4"
+              "commit": "5e47e9085f701ebe5b6f4b79ad1c511b3ceb2ad0",
+              "tag": "v0.4.5"
             },
             {
               "type": "archive",
