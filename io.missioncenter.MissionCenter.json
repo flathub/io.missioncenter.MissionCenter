@@ -84,9 +84,9 @@
         },
         {
           "type": "archive",
-          "url": "https://ziglang.org/builds/zig-linux-x86_64-0.12.0-dev.415+5af5d87ad.tar.xz",
+          "url": "https://ziglang.org/builds/zig-linux-x86_64-0.12.1.tar.xz",
           "dest": "zig",
-          "sha256": "7923f3dbd98916565971d6d9f4fef84d99fcf2c4f39842bf64c4c1a29148c905",
+          "sha256": "8860fc9725c2d9297a63008f853e9b11e3c5a2441217f99c1e3104cc6fa4a443",
           "only-arches": [
             "x86_64"
           ]
@@ -127,9 +127,9 @@
         },
         {
           "type": "archive",
-          "url": "https://ziglang.org/builds/zig-linux-aarch64-0.12.0-dev.415+5af5d87ad.tar.xz",
+          "url": "https://ziglang.org/builds/zig-linux-aarch64-0.12.1.tar.xz",
           "dest": "zig",
-          "sha256": "5139d9e23ee34d9b8715847eb6ba3eeed87a819a332b4a303313c47836cff4ff",
+          "sha256": "27d4fef393e8d8b5f3b1d19f4dd43bfdb469b4ed17bbc4c2283c1b1fe650ef7f",
           "only-arches": [
             "aarch64"
           ]
@@ -187,7 +187,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler",
-          "commit": "d47955c5a20b2f7cf85ff25a00b02160883aa0b1"
+          "commit": "07e824d8e7b2273166acbe6d58e130b3487d8074"
         }
       ],
       "cleanup": [
@@ -208,8 +208,8 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "b8552fa7bed7fe9079d56baf782b22462da6698a",
-          "tag": "v0.4.5-2"
+          "commit": "1345655523a09a4ef089ce9a8136dac432d48c0b",
+          "tag": "v0.5.0"
         },
         {
           "type": "inline",
@@ -244,8 +244,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "b8552fa7bed7fe9079d56baf782b22462da6698a",
-              "tag": "v0.4.5-2"
+              "commit": "1345655523a09a4ef089ce9a8136dac432d48c0b",
+              "tag": "v0.5.0"
             },
             {
               "type": "archive",
