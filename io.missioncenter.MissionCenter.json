@@ -19,7 +19,6 @@
     "--device=shm",
     "--device=all",
     "--socket=wayland",
-    "--talk-name=io.missioncenter.MissionCenter.Gatherer",
     "--talk-name=org.freedesktop.Flatpak",
     "--talk-name=org.gnome.Settings",
     "--system-talk-name=org.freedesktop.systemd1",
