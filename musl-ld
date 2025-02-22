@@ -1,0 +1,15 @@
+#!/bin/bash
+
+declare -a finalargs
+finalargs=()
+
+for o in "$@"; do
+    if [ "$o" = "-lc" ]; then
+        finalargs+=("/usr/lib/libc.so")
+        continue
+    fi
+
+    finalargs+=("$o")
+done
+
+exec /opt/gcc/mold/usr/bin/mold "${finalargs[@]}"

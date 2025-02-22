@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/bin/ar.orig --plugin /opt/gcc/libexec/gcc/$(arch)-unknown-linux-musl/10.5.0/liblto_plugin.so "$@"
