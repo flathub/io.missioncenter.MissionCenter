@@ -1,15 +1,28 @@
 {
   "app-id": "io.missioncenter.MissionCenter",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "47",
+  "runtime-version": "48",
   "sdk": "org.gnome.Sdk",
   "command": "missioncenter",
   "build-options": {
     "no-debuginfo": true,
     "append-path": "/app/rust-toolchain-glibc/cargo/bin",
+    "prepend-path": "/app/clang-glibc/bin",
     "env": {
       "RUSTUP_HOME": "/app/rust-toolchain-glibc/rustup",
       "RUST_BACKTRACE": "full"
+    },
+    "arch": {
+      "x86_64": {
+        "env": {
+          "LD_LIBRARY_PATH": "/app/clang-glibc/lib/x86_64-unknown-linux-gnu"
+        }
+      },
+      "aarch64": {
+        "env": {
+          "LD_LIBRARY_PATH": "/app/clang-glibc/lib/aarch64-unknown-linux-gnu"
+        }
+      }
     }
   },
   "finish-args": [
@@ -52,45 +65,55 @@
       "name": "build-tools",
       "buildsystem": "simple",
       "build-commands": [
-        "mkdir rootfs-glibc && cd rootfs-glibc && tar xf ../ubuntu-14.04-*.tar.zst && rm ../ubuntu-14.04-*.tar.zst",
-        "cp -a clang rootfs-glibc/usr/bin",
-        "cp -a ar rootfs-glibc/usr/bin",
+        "mkdir rootfs-glibc && cd rootfs-glibc && (tar xf ../ubuntu-14.04-*.tar.zst || true) && rm ../ubuntu-14.04-*.tar.zst",
+        "mkdir rootfs-musl && cd rootfs-musl && (tar xf ../alpine-*.tar.zst || true) && rm ../alpine-*.tar.zst",
         "",
-        "mkdir rootfs-musl && cd rootfs-musl && tar xf ../alpine-3.9-*.tar.zst && rm ../alpine-3.9-*.tar.zst",
-        "cp -a clang rootfs-musl/usr/bin",
-        "cp -a ar rootfs-musl/usr/bin",
-        "ln -sf libgbm.so.1 rootfs-musl/usr/lib/libgcc_s.so",
+        "rm -rf rootfs-glibc/usr/share/vim/vimfiles",
+        "cp -ar clang-glibc/cmake/usr rootfs-glibc/",
+        "cp -ar clang-glibc/cmake/usr/* /app/",
+        "rm -rf clang-glibc/cmake",
+        "",
+        "rm -rf rootfs-musl/usr/share/vim/vimfiles",
+        "cp -ar clang-musl/cmake/usr rootfs-musl/",
+        "rm -rf clang-musl/cmake",
+        "",
+        "rm clang-glibc/lib/$(arch)-unknown-linux-gnu/crtbeginS.o",
+        "rm clang-glibc/lib/$(arch)-unknown-linux-gnu/crtendS.o",
+        "rm clang-glibc/lib/$(arch)-unknown-linux-gnu/libgcc.a",
+        "",
+        "ln -sf /opt/clang/bin/clang   rootfs-glibc/usr/bin/cc",
+        "ln -sf /opt/clang/bin/ld.lld  rootfs-glibc/usr/bin/ld",
+        "ln -sf /opt/clang/bin/llvm-ar rootfs-glibc/usr/bin/ar",
+        "ln -sf /opt/clang/bin/llvm-as rootfs-glibc/usr/bin/as",
+        "ln -sf /opt/clang/lib/$(arch)-unknown-linux-gnu/libc++.so.1    rootfs-glibc/usr/lib/$(arch)-linux-gnu/",
+        "ln -sf /opt/clang/lib/$(arch)-unknown-linux-gnu/libc++abi.so.1 rootfs-glibc/usr/lib/$(arch)-linux-gnu/",
+        "ln -sf /opt/clang/lib/$(arch)-unknown-linux-gnu/libunwind.so.1 rootfs-glibc/usr/lib/$(arch)-linux-gnu/",
+        "",
+        "ln -sf /opt/clang/bin/clang   rootfs-musl/usr/bin/cc",
+        "ln -sf /opt/clang/bin/ld.lld  rootfs-musl/usr/bin/ld",
+        "ln -sf /opt/clang/bin/llvm-ar rootfs-musl/usr/bin/ar",
+        "ln -sf /opt/clang/bin/llvm-as rootfs-musl/usr/bin/as",
+        "ln -sf /opt/clang/lib/$(arch)-unknown-linux-musl/libc++.so.1    rootfs-musl/usr/lib/",
+        "ln -sf /opt/clang/lib/$(arch)-unknown-linux-musl/libc++abi.so.1 rootfs-musl/usr/lib/",
+        "ln -sf /opt/clang/lib/$(arch)-unknown-linux-musl/libunwind.so.1 rootfs-musl/usr/lib/",
+        "",
+        "rm clang-musl/lib/$(arch)-unknown-linux-musl/libunwind.so",
+        "",
+        "ln -sf libc.so rootfs-musl/usr/lib/libgcc_s.so",
+        "",
+        "# Make GNOME Builder happy",
+        "mkdir -p /app/bin",
+        "mkdir -p /app/lib",
+        "ln -s /app/clang-glibc/bin/clang /app/bin/clang",
+        "ln -s /app/clang-glibc/bin/clang++ /app/bin/clang++",
+        "ln -s /app/clang-glibc/bin/ld.lld /app/bin/lld",
+        "ln -s /app/clang-glibc/lib/$(arch)-unknown-linux-gnu/libc++.so.1 /app/lib/",
+        "ln -s /app/clang-glibc/lib/$(arch)-unknown-linux-gnu/libc++abi.so.1 /app/lib/",
+        "ln -s /app/clang-glibc/lib/$(arch)-unknown-linux-gnu/libunwind.so.1 /app/lib/",
         "",
         "mv * /app/"
       ],
       "sources": [
-        {
-          "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.82.0-x86_64.tar.zst",
-          "dest": "rust-toolchain-glibc",
-          "sha256": "73f9a8ddac2942e3b754fbfaf846efbda8bf9fa06977f8929bbdd467dffdd7f5",
-          "only-arches": [
-            "x86_64"
-          ]
-        },
-        {
-          "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.82.0-x86_64.tar.zst",
-          "dest": "rust-toolchain-musl",
-          "sha256": "168dfaf4ead10417ca7f750a4b0157a6069f71ea90b5976c5c6a4a49b1ddad0a",
-          "only-arches": [
-            "x86_64"
-          ]
-        },
-        {
-          "type": "archive",
-          "url": "https://ziglang.org/download/0.12.1/zig-linux-x86_64-0.12.1.tar.xz",
-          "dest": "zig",
-          "sha256": "8860fc9725c2d9297a63008f853e9b11e3c5a2441217f99c1e3104cc6fa4a443",
-          "only-arches": [
-            "x86_64"
-          ]
-        },
         {
           "type": "file",
           "url": "https://missioncenter.io/build-tools/ubuntu-14.04-x86_64_r4.tar.zst",
@@ -101,37 +124,46 @@
         },
         {
           "type": "file",
-          "url": "https://missioncenter.io/build-tools/alpine-3.9-x86_64_r2.tar.zst",
-          "sha256": "7af713ad535531dcaf527ab1b5426b260cc4c9f0107af341d2fa261132e72f9f",
+          "url": "https://missioncenter.io/build-tools/alpine-3.11-x86_64_r1.tar.zst",
+          "sha256": "02c49c10bf53365f026fb8764f9f1d1ed6aa8bac75ea5f089de833bc1da41569",
           "only-arches": [
             "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.82.0-aarch64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.84.1-x86_64.tar.zst",
           "dest": "rust-toolchain-glibc",
-          "sha256": "f42a7d1fa52fcce465968e419bef076bef3a51c9824bd9d9e9514fac0e9a5616",
+          "sha256": "c88e9461ec1698538d2fbeceb1fa66a7c80d270c0d59950d16a20ef6dc098303",
           "only-arches": [
-            "aarch64"
+            "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.82.0-aarch64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.84.1-x86_64.tar.zst",
           "dest": "rust-toolchain-musl",
-          "sha256": "b5eec242724368dd2b038be29eeef8c6147221710046eae047443ee3930f0d29",
+          "sha256": "8cf93ecaf142ff8a3778fc8d288333d4bd2c808afa0e6e34bf47e2d70f545516",
           "only-arches": [
-            "aarch64"
+            "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://ziglang.org/download/0.12.1/zig-linux-aarch64-0.12.1.tar.xz",
-          "dest": "zig",
-          "sha256": "27d4fef393e8d8b5f3b1d19f4dd43bfdb469b4ed17bbc4c2283c1b1fe650ef7f",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-x86_64-gnu-20.1.0.tar.zst",
+          "dest": "clang-glibc",
+          "sha256": "f11d967ea4a44a7e89f62f738241acefc6440e4a672d89029e8cf722675bbfe2",
           "only-arches": [
-            "aarch64"
+            "x86_64"
+          ]
+        },
+        {
+          "type": "archive",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-x86_64-musl-20.1.0.tar.zst",
+          "dest": "clang-musl",
+          "sha256": "9bf215f5c7e2909af809af91981df5c97f04cd749adaeaa894adb5c844983dc5",
+          "only-arches": [
+            "x86_64"
           ]
         },
         {
@@ -144,19 +176,47 @@
         },
         {
           "type": "file",
-          "url": "https://missioncenter.io/build-tools/alpine-3.9-aarch64_r2.tar.zst",
-          "sha256": "7ffcb3f640359a106c8dbefb1a3866440fdc92fb6d0104dc096566a302cf0d34",
+          "url": "https://missioncenter.io/build-tools/alpine-3.11-aarch64_r1.tar.zst",
+          "sha256": "558d87fefd65175d50dccfd2f79ce583a232297822809dd0bee92925e875efa4",
           "only-arches": [
             "aarch64"
           ]
         },
         {
-          "type": "file",
-          "path": "clang"
+          "type": "archive",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.84.1-aarch64.tar.zst",
+          "dest": "rust-toolchain-glibc",
+          "sha256": "7163f6c75deac4e7956c095b727de244bede5b5d201c289a9fe93be8a1d2e06f",
+          "only-arches": [
+            "aarch64"
+          ]
         },
         {
-          "type": "file",
-          "path": "ar"
+          "type": "archive",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.84.1-aarch64.tar.zst",
+          "dest": "rust-toolchain-musl",
+          "sha256": "d985d1f077fcdd41a636a0f143725a0ba52b95e7ad70f7e53fe5c46fb69082f5",
+          "only-arches": [
+            "aarch64"
+          ]
+        },
+        {
+          "type": "archive",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-aarch64-gnu-20.1.0.tar.zst",
+          "dest": "clang-glibc",
+          "sha256": "6bfd53e9ce7452bafffa46d17d7d6bc27a8eed7de48ab3a692be9f2b3695ae22",
+          "only-arches": [
+            "aarch64"
+          ]
+        },
+        {
+          "type": "archive",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-aarch64-musl-20.1.0.tar.zst",
+          "dest": "clang-musl",
+          "sha256": "6a94fd355e85a865658190a391cf01f206c902639a6c67bc0a9700e4fe5c53ca",
+          "only-arches": [
+            "aarch64"
+          ]
         }
       ],
       "cleanup": [
@@ -164,30 +224,13 @@
       ]
     },
     {
-      "name": "eudev",
-      "buildsystem": "autotools",
-      "cleanup": [
-        "/bin",
-        "/sbin",
-        "/etc",
-        "/lib/udev"
-      ],
-      "sources": [
-        {
-          "type": "git",
-          "url": "https://github.com/eudev-project/eudev.git",
-          "commit": "39979ddf46e75d1b75bf381e1c73914c226c4302"
-        }
-      ]
-    },
-    {
       "name": "blueprint-compiler",
       "buildsystem": "meson",
       "sources": [
         {
-          "type": "git",
-          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler",
-          "commit": "b308adc3af939b27bd18941710b4499b1131e090"
+          "type": "archive",
+          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler/-/archive/v0.16.0/blueprint-compiler-v0.16.0.tar.bz2",
+          "sha256": "77a5d593f433c8ca70a05390532cd186c60944cfa6bcd39296c1c2597a7a50fc"
         }
       ],
       "cleanup": [
@@ -202,14 +245,26 @@
         "-Dbuildtype=release",
         "-Db_lto=true",
         "-Dflatpak=true",
+        "-Dskip-codegen=true",
         "-Dcargo_env='CARGO_HOME=/run/build/missioncenter/cargo'"
       ],
+      "post-install": [
+        "strip /app/bin/missioncenter"
+      ],
+      "build-options": {
+        "env": {
+          "CC": "clang",
+          "CXX": "clang++",
+          "CC_LD": "lld",
+          "CXX_LD": "lld",
+          "LDFLAGS": "-lgcc"
+        }
+      },
       "sources": [
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "1837462a11ed952619244abf43a58960c6559e76",
-          "tag": "v0.6.2"
+          "commit": "716e446fb902aa0d56b3cee0b01fb038194e5201"
         },
         {
           "type": "inline",
@@ -221,51 +276,63 @@
       ],
       "modules": [
         {
-          "name": "missioncenter-gatherer",
+          "name": "spawner",
           "buildsystem": "simple",
-          "build-options": {
-            "env": {
-              "CARGO_HOME": "/build-dir/src/gatherer/cargo",
-              "CC": "clang"
-            }
-          },
           "build-commands": [
-            "mkdir -p src/sys_info_v2/gatherer/target/release/build/native && cp -ar nvtop-* src/sys_info_v2/gatherer/target/release/build/native/",
-            "/app/bin/proot -b /app/rust-toolchain-glibc:/app/rust-toolchain-glibc -b /app/zig:/app/zig -b $PWD:/build-dir -R /app/rootfs-glibc /bin/sh -c 'cd /build-dir/src/sys_info_v2/gatherer && env PATH=/app/rust-toolchain-glibc/cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/app/rust-toolchain-glibc/rustup cargo build --offline --release'",
-            "install -v -p -m 755 src/sys_info_v2/gatherer/target/release/gatherer /app/bin/missioncenter-gatherer-glibc",
+            "rustc -C opt-level=3 -C linker=clang -C link-arg=-fuse-ld=lld -C linker-plugin-lto -C codegen-units=1 src/magpie_client/spawner.rs",
+            "install -v -p -m 755 spawner /app/bin/missioncenter-spawner",
+            "strip /app/bin/missioncenter-spawner"
+          ],
+          "sources": [
+          {
+            "type": "git",
+            "url": "https://gitlab.com/mission-center-devs/mission-center.git",
+            "commit": "716e446fb902aa0d56b3cee0b01fb038194e5201"
+          },
+        {
+          "name": "magpie",
+          "buildsystem": "simple",
+          "build-commands": [
+            "rm -rf subprojects/magpie/target",
+            "mkdir -p subprojects/magpie/target/release/build/native && cp -ar nvtop-* subprojects/magpie/target/release/build/native/",
+            "/app/bin/proot -b /app/rust-toolchain-glibc:/opt/rust -b /app/clang-glibc:/opt/clang -b $PWD:/build-dir -R /app/rootfs-glibc /bin/sh -c 'cd /build-dir/subprojects/magpie && env PATH=/opt/rust/cargo/bin:/opt/clang/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/opt/rust/rustup env CC=clang env CXX=clang++ env CFLAGS=-flto env CXXFLAGS=-flto cargo build --offline --release --features=skip-codegen'",
+            "install -v -p -m 755 subprojects/magpie/target/release/magpie /app/bin/missioncenter-magpie-glibc",
             "",
-            "rm -rf src/sys_info_v2/gatherer/target",
+            "rm -rf subprojects/magpie/target",
+            "mkdir -p subprojects/magpie/target/release/build/native && cp -ar nvtop-* subprojects/magpie/target/release/build/native/",
+            "/app/bin/proot -b /app/rust-toolchain-musl:/opt/rust -b /app/clang-musl:/opt/clang -b $PWD:/build-dir -R /app/rootfs-musl /bin/sh -c 'cd /build-dir/subprojects/magpie && env PATH=/opt/rust/cargo/bin:/opt/clang/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/opt/rust/rustup env CC=clang env CXX=clang++ cargo build --offline --release --features=skip-codegen'",
+            "install -v -p -m 755 subprojects/magpie/target/release/magpie /app/bin/missioncenter-magpie-musl",
             "",
-            "mkdir -p src/sys_info_v2/gatherer/target/release/build/native && mv nvtop-* src/sys_info_v2/gatherer/target/release/build/native/",
-            "/app/bin/proot -b /app/rust-toolchain-musl:/app/rust-toolchain-musl -b /app/zig:/app/zig -b $PWD:/build-dir -R /app/rootfs-musl /bin/sh -c 'cd /build-dir/src/sys_info_v2/gatherer && env PATH=/app/rust-toolchain-musl/cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/app/rust-toolchain-musl/rustup cargo build --offline --release'",
-            "install -v -p -m 755 src/sys_info_v2/gatherer/target/release/gatherer /app/bin/missioncenter-gatherer-musl"
+            "strip /app/bin/missioncenter-magpie-glibc /app/bin/missioncenter-magpie-musl",
+            "",
+            "sh -c 'cd subprojects/magpie/platform-linux/hwdb && ./generate_hwdb.py -o . 20-pci-vendor-model.hwdb 20-usb-vendor-model.hwdb'",
+            "mkdir /app/share/missioncenter/ && mv subprojects/magpie/platform-linux/hwdb/hw.db /app/share/missioncenter/"
           ],
           "sources": [
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "1837462a11ed952619244abf43a58960c6559e76",
-              "tag": "v0.6.2"
+              "commit": "716e446fb902aa0d56b3cee0b01fb038194e5201"
             },
             {
               "type": "archive",
-              "url": "https://github.com/Syllo/nvtop/archive/20ea55dbd1eeb4342ff0112fae3ee2a0bfe352ea.tar.gz",
-              "sha256": "f2e41eb4331f116ecee3885b748078a1b6055572ccf6a2f4b0539b5c8bdaf48c",
-              "dest": "nvtop-20ea55dbd1eeb4342ff0112fae3ee2a0bfe352ea"
+              "url": "https://github.com/Syllo/nvtop/archive/73291884d926445e499d6b9b71cb7a9bdbc7c393.tar.gz",
+              "sha256": "e1c001b592f5132bb5a00154f2151ba9547b3ff0dc031c4453f5e19153e64cf1",
+              "dest": "nvtop-73291884d926445e499d6b9b71cb7a9bdbc7c393"
             },
             {
               "type": "shell",
               "commands": [
-                "cd nvtop-* && find ../src/sys_info_v2/gatherer/3rdparty/nvtop/patches -type f -iname \"*.patch\" -exec sh -c 'patch -p1 < {}' \\;"
+                "cd nvtop-* && find ../subprojects/magpie/platform-linux/3rdparty/nvtop/patches -type f -iname \"*.patch\" -exec sh -c 'patch -p1 < {}' \\;"
               ]
             },
             {
-              "type": "inline",
-              "contents": "[source.vendored-sources]\ndirectory = \"../../../cargo/vendor\"\n\n[source.crates-io]\nreplace-with = \"vendored-sources\"\n\n[target.x86_64-unknown-linux-musl]\nrustflags = [ '-C', 'target-feature=-crt-static', '-C', 'link-args=-lunwind' ]\n\n[target.aarch64-unknown-linux-musl]\nrustflags = [ '-C', 'target-feature=-crt-static', '-C', 'link-args=-lunwind' ]\n",
-              "dest": "src/sys_info_v2/gatherer/.cargo",
+              "type": "file",
+              "path": "magpie-cargo-config.toml",
+              "dest": "subprojects/magpie/.cargo",
               "dest-filename": "config.toml"
             },
-            "cargo-sources-gatherer.json"
+            "cargo-sources-magpie.json"
           ],
           "modules": [
             {
@@ -329,3 +396,4 @@
     }
   ]
 }
+
