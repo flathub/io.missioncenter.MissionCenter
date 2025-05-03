@@ -284,11 +284,13 @@
             "strip /app/bin/missioncenter-spawner"
           ],
           "sources": [
-          {
-            "type": "git",
-            "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-            "commit": "716e446fb902aa0d56b3cee0b01fb038194e5201"
-          },
+            {
+              "type": "git",
+              "url": "https://gitlab.com/mission-center-devs/mission-center.git",
+              "commit": "716e446fb902aa0d56b3cee0b01fb038194e5201"
+            }
+          ]
+        },
         {
           "name": "magpie",
           "buildsystem": "simple",
