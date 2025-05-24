@@ -132,18 +132,18 @@
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.84.1-x86_64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.87.0-x86_64.tar.zst",
           "dest": "rust-toolchain-glibc",
-          "sha256": "c88e9461ec1698538d2fbeceb1fa66a7c80d270c0d59950d16a20ef6dc098303",
+          "sha256": "e19933754d224dbacc7dc44af0d053efd632bc59aed6a9252c6b31de4be28305",
           "only-arches": [
             "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.84.1-x86_64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.87.0-x86_64.tar.zst",
           "dest": "rust-toolchain-musl",
-          "sha256": "8cf93ecaf142ff8a3778fc8d288333d4bd2c808afa0e6e34bf47e2d70f545516",
+          "sha256": "5d41efb020e40e9f0658a1b613f50ea608aad71ed3d4a84fe539d5bb70758eee",
           "only-arches": [
             "x86_64"
           ]
@@ -184,18 +184,18 @@
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.84.1-aarch64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.87.0-aarch64.tar.zst",
           "dest": "rust-toolchain-glibc",
-          "sha256": "7163f6c75deac4e7956c095b727de244bede5b5d201c289a9fe93be8a1d2e06f",
+          "sha256": "74fb6567135f08301a33a96254a36683202b56f75df43df4826dfbe04b0d2026",
           "only-arches": [
             "aarch64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.84.1-aarch64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.87.0-aarch64.tar.zst",
           "dest": "rust-toolchain-musl",
-          "sha256": "d985d1f077fcdd41a636a0f143725a0ba52b95e7ad70f7e53fe5c46fb69082f5",
+          "sha256": "839099b7280aeceb0d0c3136546da573842701afb65e1b96ec1ce5d40d0db303",
           "only-arches": [
             "aarch64"
           ]
@@ -264,8 +264,8 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "716e446fb902aa0d56b3cee0b01fb038194e5201",
-          "tag": "v1.0.0"
+          "commit": "a2637cbca9f2c1819a1dd83f9d4801bcee122fab",
+          "tag": "v1.0.1"
         },
         {
           "type": "inline",
@@ -288,8 +288,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "716e446fb902aa0d56b3cee0b01fb038194e5201",
-              "tag": "v1.0.0"
+              "commit": "a2637cbca9f2c1819a1dd83f9d4801bcee122fab",
+              "tag": "v1.0.1"
             }
           ]
         },
@@ -316,8 +316,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "716e446fb902aa0d56b3cee0b01fb038194e5201",
-              "tag": "v1.0.0"
+              "commit": "a2637cbca9f2c1819a1dd83f9d4801bcee122fab",
+              "tag": "v1.0.1"
             },
             {
               "type": "archive",
