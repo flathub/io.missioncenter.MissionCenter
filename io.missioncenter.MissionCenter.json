@@ -1,7 +1,7 @@
 {
   "app-id": "io.missioncenter.MissionCenter",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "48",
+  "runtime-version": "49",
   "sdk": "org.gnome.Sdk",
   "command": "missioncenter",
   "build-options": {
@@ -132,36 +132,36 @@
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.87.0-x86_64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.90.0-x86_64.tar.zst",
           "dest": "rust-toolchain-glibc",
-          "sha256": "e19933754d224dbacc7dc44af0d053efd632bc59aed6a9252c6b31de4be28305",
+          "sha256": "938257b991c6617634fdd1b25cabcfded8f4d4d10b9b5693f4f05c2b8f0e0cf9",
           "only-arches": [
             "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.87.0-x86_64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.90.0-x86_64.tar.zst",
           "dest": "rust-toolchain-musl",
-          "sha256": "5d41efb020e40e9f0658a1b613f50ea608aad71ed3d4a84fe539d5bb70758eee",
+          "sha256": "8110f9709554a3d1e8de94951025a1d02e0f88c35d1dbf4f1f6312cc241e0b97",
           "only-arches": [
             "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/llvm-tooling-x86_64-gnu-20.1.0.tar.zst",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-x86_64-gnu-21.1.1.tar.zst",
           "dest": "clang-glibc",
-          "sha256": "f11d967ea4a44a7e89f62f738241acefc6440e4a672d89029e8cf722675bbfe2",
+          "sha256": "8d45e8d794ba174179aa7a052214a1374afa437d48ac87747701c24e1c8e07f3",
           "only-arches": [
             "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/llvm-tooling-x86_64-musl-20.1.0.tar.zst",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-x86_64-musl-21.1.1.tar.zst",
           "dest": "clang-musl",
-          "sha256": "9bf215f5c7e2909af809af91981df5c97f04cd749adaeaa894adb5c844983dc5",
+          "sha256": "91d9115131b36ed22949c5c6a660a3cb644fc3f5254d88b612977e9d7e461e58",
           "only-arches": [
             "x86_64"
           ]
@@ -184,36 +184,36 @@
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.87.0-aarch64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.90.0-aarch64.tar.zst",
           "dest": "rust-toolchain-glibc",
-          "sha256": "74fb6567135f08301a33a96254a36683202b56f75df43df4826dfbe04b0d2026",
+          "sha256": "0e01b77a28cc529a5fffca4816c909931fa06a0a6c222f65c371781aab539843",
           "only-arches": [
             "aarch64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.87.0-aarch64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.90.0-aarch64.tar.zst",
           "dest": "rust-toolchain-musl",
-          "sha256": "839099b7280aeceb0d0c3136546da573842701afb65e1b96ec1ce5d40d0db303",
+          "sha256": "2c5d5a81b8f721e0932a389219b5e17eccbde35b49a09e5ddf45fe3bcb426a92",
           "only-arches": [
             "aarch64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/llvm-tooling-aarch64-gnu-20.1.0.tar.zst",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-aarch64-gnu-21.1.1.tar.zst",
           "dest": "clang-glibc",
-          "sha256": "6bfd53e9ce7452bafffa46d17d7d6bc27a8eed7de48ab3a692be9f2b3695ae22",
+          "sha256": "42149500f9410fc2c73cc866ba5090304db36afc63c595b6ba2445f4987f08b8",
           "only-arches": [
             "aarch64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/llvm-tooling-aarch64-musl-20.1.0.tar.zst",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-aarch64-musl-21.1.1.tar.zst",
           "dest": "clang-musl",
-          "sha256": "6a94fd355e85a865658190a391cf01f206c902639a6c67bc0a9700e4fe5c53ca",
+          "sha256": "a0ff9934728771de14b16c2b967a5978be7cd6eb56f29dbf72cb9e88e11f5222",
           "only-arches": [
             "aarch64"
           ]
@@ -229,8 +229,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler/-/archive/v0.16.0/blueprint-compiler-v0.16.0.tar.bz2",
-          "sha256": "77a5d593f433c8ca70a05390532cd186c60944cfa6bcd39296c1c2597a7a50fc"
+          "url": "https://github.com/GNOME/blueprint-compiler/archive/refs/tags/0.18.0.tar.gz",
+          "sha256": "51aa472ecd7bd4b32b8baa7ae6768b19810793d4a2a1aba39c5b31b0170cb258"
         }
       ],
       "cleanup": [
@@ -264,8 +264,8 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "dacf48cb6f324acc41d8d25f364758afa6ac58aa",
-          "tag": "v1.0.2"
+          "commit": "51ecef6ffc31da8435f13463c6fbab31968ac3ca",
+          "tag": "v1.1.0"
         },
         {
           "type": "inline",
@@ -288,8 +288,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "dacf48cb6f324acc41d8d25f364758afa6ac58aa",
-              "tag": "v1.0.2"
+              "commit": "51ecef6ffc31da8435f13463c6fbab31968ac3ca",
+              "tag": "v1.1.0"
             }
           ]
         },
@@ -316,14 +316,14 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "dacf48cb6f324acc41d8d25f364758afa6ac58aa",
-              "tag": "v1.0.2"
+              "commit": "51ecef6ffc31da8435f13463c6fbab31968ac3ca",
+              "tag": "v1.1.0"
             },
             {
               "type": "archive",
-              "url": "https://github.com/Syllo/nvtop/archive/73291884d926445e499d6b9b71cb7a9bdbc7c393.tar.gz",
-              "sha256": "e1c001b592f5132bb5a00154f2151ba9547b3ff0dc031c4453f5e19153e64cf1",
-              "dest": "nvtop-73291884d926445e499d6b9b71cb7a9bdbc7c393"
+              "url": "https://github.com/Syllo/nvtop/archive/339ee0b10a64ec51f43d27357b0068a40f16e9e4.tar.gz",
+              "sha256": "334e9909290171676785816c986a288b4913b10441e0744bfabfbca319bd3e55",
+              "dest": "nvtop-339ee0b10a64ec51f43d27357b0068a40f16e9e4"
             },
             {
               "type": "shell",
@@ -368,7 +368,7 @@
                   "sources": [
                     {
                       "type": "archive",
-                      "url": "https://libarchive.org/downloads/libarchive-3.6.2.tar.xz",
+                      "url": "https://github.com/libarchive/libarchive/releases/download/v3.6.2/libarchive-3.6.2.tar.xz",
                       "sha256": "9e2c1b80d5fbe59b61308fdfab6c79b5021d7ff4ff2489fb12daf0a96a83551d"
                     }
                   ],
