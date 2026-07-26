@@ -1,7 +1,7 @@
 {
   "app-id": "io.missioncenter.MissionCenter",
   "runtime": "org.gnome.Platform",
-  "runtime-version": "49",
+  "runtime-version": "50",
   "sdk": "org.gnome.Sdk",
   "command": "missioncenter",
   "build-options": {
@@ -132,36 +132,36 @@
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.90.0-x86_64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.96.1-x86_64.tar.zst",
           "dest": "rust-toolchain-glibc",
-          "sha256": "938257b991c6617634fdd1b25cabcfded8f4d4d10b9b5693f4f05c2b8f0e0cf9",
+          "sha256": "49a27488bba5142ee76313787ef9ce7fd10a08502bdf4c8bcf30fb3acdff0eba",
           "only-arches": [
             "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.90.0-x86_64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.96.1-x86_64.tar.zst",
           "dest": "rust-toolchain-musl",
-          "sha256": "8110f9709554a3d1e8de94951025a1d02e0f88c35d1dbf4f1f6312cc241e0b97",
+          "sha256": "baac1b66aa45535bbff11c33a8ff0caf1d71099f918e606a70db65507ae6ef62",
           "only-arches": [
             "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/llvm-tooling-x86_64-gnu-21.1.1.tar.zst",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-x86_64-gnu-22.1.8.tar.zst",
           "dest": "clang-glibc",
-          "sha256": "8d45e8d794ba174179aa7a052214a1374afa437d48ac87747701c24e1c8e07f3",
+          "sha256": "63890fd1ff0cd3c8eda9ff21291703714683a1d2deaa8e68012b192b1f54b789",
           "only-arches": [
             "x86_64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/llvm-tooling-x86_64-musl-21.1.1.tar.zst",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-x86_64-musl-22.1.8.tar.zst",
           "dest": "clang-musl",
-          "sha256": "91d9115131b36ed22949c5c6a660a3cb644fc3f5254d88b612977e9d7e461e58",
+          "sha256": "542dbc139c4751ef2f780ab25eb955af725d6e9328004c98aa5517f2078bf38f",
           "only-arches": [
             "x86_64"
           ]
@@ -184,36 +184,36 @@
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.90.0-aarch64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-glibc-1.96.1-aarch64.tar.zst",
           "dest": "rust-toolchain-glibc",
-          "sha256": "0e01b77a28cc529a5fffca4816c909931fa06a0a6c222f65c371781aab539843",
+          "sha256": "a1a1380e8394388f2fd48a023b512a7b043da04f77f8c12c5caf0a1abbbcc1a3",
           "only-arches": [
             "aarch64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.90.0-aarch64.tar.zst",
+          "url": "https://missioncenter.io/build-tools/rust-toolchain-musl-1.96.1-aarch64.tar.zst",
           "dest": "rust-toolchain-musl",
-          "sha256": "2c5d5a81b8f721e0932a389219b5e17eccbde35b49a09e5ddf45fe3bcb426a92",
+          "sha256": "b2b498c82784c491425a7f53a584bbbbbc29a230a9d46c03a1b95fb0c723b61b",
           "only-arches": [
             "aarch64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/llvm-tooling-aarch64-gnu-21.1.1.tar.zst",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-aarch64-gnu-22.1.8.tar.zst",
           "dest": "clang-glibc",
-          "sha256": "42149500f9410fc2c73cc866ba5090304db36afc63c595b6ba2445f4987f08b8",
+          "sha256": "062adc3a7b53be67e6c82d802b2a6cc62cdacfde420b8f0d9082c045961b2ef4",
           "only-arches": [
             "aarch64"
           ]
         },
         {
           "type": "archive",
-          "url": "https://missioncenter.io/build-tools/llvm-tooling-aarch64-musl-21.1.1.tar.zst",
+          "url": "https://missioncenter.io/build-tools/llvm-tooling-aarch64-musl-22.1.8.tar.zst",
           "dest": "clang-musl",
-          "sha256": "a0ff9934728771de14b16c2b967a5978be7cd6eb56f29dbf72cb9e88e11f5222",
+          "sha256": "71e0f984d8a580d3f868897bd13fc37310ad2043893c9c7ec150bff40574f0ac",
           "only-arches": [
             "aarch64"
           ]
@@ -231,7 +231,6 @@
         "-Dbuildtype=release",
         "-Db_lto=true",
         "-Dflatpak=true",
-        "-Dskip-codegen=true",
         "-Dcargo_env='CARGO_HOME=/run/build/missioncenter/cargo'"
       ],
       "post-install": [
@@ -250,8 +249,8 @@
         {
           "type": "git",
           "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-          "commit": "51ecef6ffc31da8435f13463c6fbab31968ac3ca",
-          "tag": "v1.1.0"
+          "commit": "193e3729367035cf184da004c3246efe79d5c53e",
+          "tag": "v1.2.0"
         },
         {
           "type": "inline",
@@ -274,8 +273,8 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "51ecef6ffc31da8435f13463c6fbab31968ac3ca",
-              "tag": "v1.1.0"
+              "commit": "193e3729367035cf184da004c3246efe79d5c53e",
+              "tag": "v1.2.0"
             }
           ]
         },
@@ -285,12 +284,12 @@
           "build-commands": [
             "rm -rf subprojects/magpie/target",
             "mkdir -p subprojects/magpie/target/release/build/native && cp -ar nvtop-* subprojects/magpie/target/release/build/native/",
-            "/app/bin/proot -b /app/rust-toolchain-glibc:/opt/rust -b /app/clang-glibc:/opt/clang -b $PWD:/build-dir -R /app/rootfs-glibc /bin/sh -c 'cd /build-dir/subprojects/magpie && env PATH=/opt/rust/cargo/bin:/opt/clang/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/opt/rust/rustup env CC=clang env CXX=clang++ env CFLAGS=-flto env CXXFLAGS=-flto cargo build --offline --release --features=skip-codegen'",
+            "/app/bin/proot -b /app/rust-toolchain-glibc:/opt/rust -b /app/clang-glibc:/opt/clang -b $PWD:/build-dir -R /app/rootfs-glibc /bin/sh -c 'cd /build-dir/subprojects/magpie && env PATH=/opt/rust/cargo/bin:/opt/clang/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/opt/rust/rustup env CC=clang env CXX=clang++ env CFLAGS=-flto env CXXFLAGS=-flto cargo build --offline --release'",
             "install -v -p -m 755 subprojects/magpie/target/release/magpie /app/bin/missioncenter-magpie-glibc",
             "",
             "rm -rf subprojects/magpie/target",
             "mkdir -p subprojects/magpie/target/release/build/native && cp -ar nvtop-* subprojects/magpie/target/release/build/native/",
-            "/app/bin/proot -b /app/rust-toolchain-musl:/opt/rust -b /app/clang-musl:/opt/clang -b $PWD:/build-dir -R /app/rootfs-musl /bin/sh -c 'cd /build-dir/subprojects/magpie && env PATH=/opt/rust/cargo/bin:/opt/clang/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/opt/rust/rustup env CC=clang env CXX=clang++ cargo build --offline --release --features=skip-codegen'",
+            "/app/bin/proot -b /app/rust-toolchain-musl:/opt/rust -b /app/clang-musl:/opt/clang -b $PWD:/build-dir -R /app/rootfs-musl /bin/sh -c 'cd /build-dir/subprojects/magpie && env PATH=/opt/rust/cargo/bin:/opt/clang/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin env RUSTUP_HOME=/opt/rust/rustup env CC=clang env CXX=clang++ cargo build --offline --release'",
             "install -v -p -m 755 subprojects/magpie/target/release/magpie /app/bin/missioncenter-magpie-musl",
             "",
             "strip /app/bin/missioncenter-magpie-glibc /app/bin/missioncenter-magpie-musl",
@@ -302,14 +301,14 @@
             {
               "type": "git",
               "url": "https://gitlab.com/mission-center-devs/mission-center.git",
-              "commit": "51ecef6ffc31da8435f13463c6fbab31968ac3ca",
-              "tag": "v1.1.0"
+              "commit": "193e3729367035cf184da004c3246efe79d5c53e",
+              "tag": "v1.2.0"
             },
             {
               "type": "archive",
-              "url": "https://github.com/Syllo/nvtop/archive/339ee0b10a64ec51f43d27357b0068a40f16e9e4.tar.gz",
-              "sha256": "334e9909290171676785816c986a288b4913b10441e0744bfabfbca319bd3e55",
-              "dest": "nvtop-339ee0b10a64ec51f43d27357b0068a40f16e9e4"
+              "url": "https://github.com/Syllo/nvtop/archive/3d4a953da02bc18886734613bb9f60ff80669de7.tar.gz",
+              "sha256": "e1c8651d299cab61f3e178b9fa97dcf4651f9cc526a51818fca1a47f7838cbd3",
+              "dest": "nvtop-3d4a953da02bc18886734613bb9f60ff80669de7"
             },
             {
               "type": "shell",
